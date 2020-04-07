@@ -16,8 +16,8 @@ public:
     char    podajkolor();
     int     podajnumer();
     //string podajnazwe();
-    virtual     int zbij();
-    virtual     int czyzbity();
+    int zbij();
+    int czyzbity();
 };
 
 #endif // BIERKA_H

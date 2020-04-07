@@ -1,6 +1,8 @@
 SOURCES += \
     main.cpp \
-    bierka.cpp
+    bierka.cpp \
+    pion.cpp
 
 HEADERS += \
-    bierka.h
+    bierka.h \
+    pion.h
