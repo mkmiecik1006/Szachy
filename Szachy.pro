@@ -1,2 +1,6 @@
 SOURCES += \
-    main.cpp
+    main.cpp \
+    bierka.cpp
+
+HEADERS += \
+    bierka.h
