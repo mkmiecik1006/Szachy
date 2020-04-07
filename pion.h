@@ -10,6 +10,33 @@ class Pion : public Bierka
 public:
     Pion();
     Pion(char k, int n) :Bierka(k, n){};
+    int rusz(int x, int y) override
+    {
+
+        if( pozycja[0]==x) //ta sama kolumna
+        {
+            if(pozycja[1]==y+1)
+            {
+                return 0;
+            }
+            else if(pierwszy==false&&pozycja[1]==y+2)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+
+        }
+    }
+    int promotuj()
+    {
+        return 0;
+    }
+
+
+
 };
 
 #endif // PION_H

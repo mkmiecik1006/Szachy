@@ -1,8 +1,10 @@
 SOURCES += \
     main.cpp \
     bierka.cpp \
-    pion.cpp
+    pion.cpp \
+    szachownica.cpp
 
 HEADERS += \
     bierka.h \
-    pion.h
+    pion.h \
+    szachownica.h

@@ -9,15 +9,17 @@ protected:
     //string  nazwa;
     bool    zbity = false;  //domyślnie figury nie są zbite
     int     pozycja[2];
+    int     zmienpozycje(int x, int y);
 public:
     Bierka();
     Bierka(char k, int n);
-    virtual     int rusz(int x, int y);
+    virtual     int rusz(int x, int y)=0;
+
     char    podajkolor();
     int     podajnumer();
     //string podajnazwe();
-    virtual     int zbij();
-    virtual     int czyzbity();
+    int zbij();
+    int czyzbity();
 };
 
 #endif // BIERKA_H
