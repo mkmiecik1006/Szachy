@@ -31,7 +31,7 @@ Bierka::zbij()
     zbity =true;
 }
 
-Bierka::rusz(int x, int y)
+Bierka::zmienpozycje(int x, int y)
 {
     pozycja[0]=x;
     pozycja[1]=y;

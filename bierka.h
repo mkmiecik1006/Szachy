@@ -1,21 +1,25 @@
 #ifndef BIERKA_H
 #define BIERKA_H
-
+using namespace std;
 class Bierka
 {
 protected:
     char    kolor;
     int     numer;
+    //string  nazwa;
     bool    zbity = false;  //domyślnie figury nie są zbite
     int     pozycja[2];
+    int     zmienpozycje(int x, int y);
 public:
     Bierka();
     Bierka(char k, int n);
-    virtual     int rusz(int x, int y);
-    char podajkolor();
-    int podajnumer();
-    virtual     int zbij();
-    virtual     int czyzbity();
+    virtual     int rusz(int x, int y)=0;
+
+    char    podajkolor();
+    int     podajnumer();
+    //string podajnazwe();
+    int zbij();
+    int czyzbity();
 };
 
 #endif // BIERKA_H
