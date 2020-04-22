@@ -4,6 +4,8 @@
 #include "goniec.h"
 #include "kon.h"
 #include "hetman.h"
+#include "wieza.h"
+#include "krol.h"
 
 int Szachownica::wyczysc()
 {
@@ -89,13 +91,14 @@ int Szachownica::ustaw()
     figury.insert( make_pair<int, Pion>(6, Pion('w', 6)));
     figury.insert( make_pair<int, Pion>(7, Pion('w', 7)));
     figury.insert( make_pair<int, Pion>(8, Pion('w', 8)));
-
-
+    figury.insert(make_pair<int, Wieza>(9, Wieza('w', 9)));
+    figury.insert(make_pair<int, Wieza>(10, Wieza('w', 10)));
     figury.insert(make_pair<int, Kon>(11, Kon('w', 11)));
     figury.insert(make_pair<int, Kon>(12, Kon('w', 12)));
     figury.insert(make_pair<int, Goniec>(13, Goniec('w', 13)));
     figury.insert(make_pair<int, Goniec>(14, Goniec('w', 14)));
     figury.insert(make_pair<int, Hetman>(15, Hetman('w', 15)));
+    figury.insert(make_pair<int, Krol>(16, Krol('w', 16)));
 
     figury.insert( make_pair<int, Pion>(-1, Pion('b', -1)));
     figury.insert( make_pair<int, Pion>(-2, Pion('b', -2)));
@@ -105,15 +108,16 @@ int Szachownica::ustaw()
     figury.insert( make_pair<int, Pion>(-6, Pion('b', -6)));
     figury.insert( make_pair<int, Pion>(-7, Pion('b', -7)));
     figury.insert( make_pair<int, Pion>(-8, Pion('b', -8)));
-
-
+    figury.insert(make_pair<int, Wieza>(-9, Wieza('b', -9)));
+    figury.insert(make_pair<int, Wieza>(-10, Wieza('b', -10)));
     figury.insert(make_pair<int, Kon>(-11, Kon('b', -11)));
     figury.insert(make_pair<int, Kon>(-12, Kon('b', -12)));
     figury.insert(make_pair<int, Goniec>(-13, Goniec('b', -13)));
     figury.insert(make_pair<int, Goniec>(-14, Goniec('b', -14)));
-    figury.insert(make_pair<int, Hetman>(15, Hetman('b', -15)));
+    figury.insert(make_pair<int, Hetman>(-15, Hetman('b', -15)));
+    figury.insert(make_pair<int, Krol>(-16, Krol('b', -16)));
 
-    wyczysc();      //ustaw wszystkie wartości na 0
+
     plansza[0][0] = -9;
     plansza[0][1] = -11;
     plansza[0][2] = -13;
