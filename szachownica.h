@@ -12,36 +12,33 @@ class Szachownica
 {
 private:
 public:
-    int     plansza[8][8]; /*= {{-9, -11, -13, -15, -16, -14, -12, -10},
-    { -1,  -2,  -3,  -4,  -5,  -6,  -7,  -8},
-    {  0,   0,   0,   0,   0,   0,   0,   0},
-    {  0,   0,   0,   0,   0,   0,   0,   0},
-    {  0,   0,   0,   0,   0,   0,   0,   0},
-    {  0,   0,   0,   0,   0,   0,   0,   0},
-    {  1,   2,   3,   4,   5,   6,   7,   8},
-    {  9,  11,  13,  15,  16,  14,  12,  10}};*/
+    int     plansza[8][8];
 
-    int     tmp[8][8]; /*{{-9, -11, -13, -15, -16, -14, -12, -10},
-    { -1,  -2,  -3,  -4,  -5,  -6,  -7,  -8},
-    {  0,   0,   0,   0,   0,   0,   0,   0},
-    {  0,   0,   0,   0,   0,   0,   0,   0},
-    {  0,   0,   0,   0,   0,   0,   0,   0},
-    {  0,   0,   0,   0,   0,   0,   0,   0},
-    {  1,   2,   3,   4,   5,   6,   7,   8},
-    {  9,  11,  13,  15,  16,  14,  12,  10}};*/
+    int     tmp[8][8];
 
     map <int, Bierka> figury;
 public:
     Szachownica()
     {
-        ustaw();
+        for(int i = 0; i<8;i++)
+        {
+            for(int j = 0; j<8; j++)
+            {
+                plansza[i][j] = 0;
+            }
+        }
+    }
+
+    ~Szachownica()
+    {
+        wyczysc();
     }
 
 
     int     wyczysc();
-    int     usun(Bierka);
-    int     przesun(Bierka, int*);
-    int     dodaj(Bierka, int*);
+    int     usun(Bierka*);
+    int     przesun(Bierka*, int*);
+   // int     dodaj(Bierka, int*);
     int     czywolne(int* t)
     {
         return plansza[t[0]] [t[1]];//zwraca wartość bierki na danym polu
@@ -54,14 +51,15 @@ public:
         Bierka* b = &(figury.find(n)->second);
         return b->podajkolor();
     }
-    int     zbij(int n)
+    int     zbij(Bierka* b)
     {
-        Bierka* b = &(figury.find(n)->second);
-        return b->zbij();
+        int* pole = b->podajpozycje();
+        b->zbij();
+        plansza[pole[0]][pole[1]] = 0;
+        return 0;
 
     }//zbija bierkę o danym numerze
 
 
 };
-
 #endif // SZACHOWNICA_H

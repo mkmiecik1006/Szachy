@@ -2,8 +2,9 @@
 #define PION_H
 #include "bierka.h"
 #include <iostream>
-#include "szachownica.h"
+//#include "szachownica.h"
 
+class Szachownica;
 
 
 class Pion : public Bierka
@@ -23,7 +24,19 @@ public:
         zbity = false;
         pierwszy = false;
     }
-    int rusz(Szachownica s, int* poz);
+    int rusz(Szachownica* s, int* pole) override;
+    int zmienpozycje(int *pole)
+    {
+        pozycja[0]=pole[0];
+        pozycja[1]=pole[1];
+        pierwszy = true;
+        return 0;
+    }
+
+    bool czypierwszy()
+    {
+        return pierwszy;
+    }
 
     int promotuj()
     {
