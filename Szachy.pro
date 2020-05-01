@@ -9,7 +9,10 @@ SOURCES += main.cpp \
     szachownica.cpp \
     goniec.cpp \
     kon.cpp \
-    hetman.cpp
+    hetman.cpp \
+    wieza.cpp \
+    krol.cpp \
+    rozgrywka.cpp
 
 HEADERS += \
     bierka.h \
@@ -17,5 +20,8 @@ HEADERS += \
     szachownica.h \
     goniec.h \
     kon.h \
-    hetman.h
+    hetman.h \
+    wieza.h \
+    krol.h \
+    rozgrywka.h
 

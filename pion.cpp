@@ -6,12 +6,12 @@
 //#include  "szachownica.cpp"
 
 
-int Pion::rusz(Szachownica s, int* poz)
+int Pion::rusz(Szachownica* s, int* poz)
 {
-    int bierka = s.czywolne(poz);   //na planszy znajdujemy dane pole, jeżeli jest wolne ma wartość 0
+    int bierka = s->czywolne(poz);   //na planszy znajdujemy dane pole, jeżeli jest wolne ma wartość 0
     int x   = poz[0];               //jeżeli zajęte poda numer bierki
     int y   = poz[1];
-    if(x>=0&&y>=0&& x<8&&y<8)
+    if(zbity==false)
     {
         if( bierka == 0)
         {
@@ -40,7 +40,7 @@ int Pion::rusz(Szachownica s, int* poz)
         }
         else //bicie
         {
-            Bierka* b = &(s.figury.find(bierka)->second); //znadujemy bierkę o numerze na pozycji
+            Bierka* b = &(s->figury.find(bierka)->second); //znadujemy bierkę o numerze na pozycji
             if(kolor != b->podajkolor())    //jeżeli bierka jest innego koloru to można bić
             {
                 if((pozycja[1]==y+1)&&(pozycja[0]==x-1||pozycja[0]==x+1))   //pole o 1 do przodu i po skosie

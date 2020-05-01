@@ -1,6 +1,7 @@
 #ifndef BIERKA_H
 #define BIERKA_H
-//#include "szachownica.h"
+class Szachownica;
+
 using namespace std;
 class Bierka
 {
@@ -10,6 +11,7 @@ protected:
     //string  nazwa;
     bool    zbity;  //domyślnie figury nie są zbite
     int     pozycja[2];
+    bool    pierwszy;
 
 
 public:
@@ -20,6 +22,7 @@ public:
         kolor = 'w';
         numer = 1;
         zbity = false;
+        pierwszy = false;
 
     }
 
@@ -31,9 +34,11 @@ public:
         pozycja[0] = -1;
         pozycja[-1] = -1;
     }
-    int rusz()  {return 1;}
+    int virtual rusz(Szachownica* s, int* pole)  {return 1;};
+
     char podajkolor();
-    /*{
+    /*
+    {
         return kolor;
     }*/
 
@@ -64,6 +69,10 @@ public:
         return 0;
     }
 
+    bool czypierwszy()
+    {
+        return pierwszy;
+    }
 
     int* podajpozycje()
     {

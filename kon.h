@@ -12,7 +12,7 @@ public:
         pozycja[0] = -1;
         pozycja[-1] = -1;
     }
-    int rusz(Szachownica s, int* poz);
+    int rusz(Szachownica* s, int* poz);
 };
 
 #endif // KON_H

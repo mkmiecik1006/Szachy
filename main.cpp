@@ -1,8 +1,6 @@
 #include <iostream>
 #include <stdio.h>
-#include "bierka.h"
-#include "pion.h"
-#include "szachownica.h"
+
 
 using namespace std;
 

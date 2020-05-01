@@ -1,8 +1,8 @@
-#include "hetman.h"
+#include "wieza.h"
 #include "bierka.h"
 #include "szachownica.h"
 
-int Hetman::rusz(Szachownica* s, int *poz)
+int Wieza::rusz(Szachownica* s, int *poz)
 {
     int x   = poz[0];               //jeżeli zajęte poda numer bierki
     int y   = poz[1];
@@ -42,19 +42,6 @@ int Hetman::rusz(Szachownica* s, int *poz)
                         if(ry>0)  ky=1;
                         else     ky =-1;
                     }
-
-
-                }
-                else if(abs(rx)==abs(ry))       //ruch po przekątnych
-                {
-                    z = abs(rx);
-                    if(rx>0)  kx=1;      //krok dla x
-                    else     kx =-1;     //krok dla y
-                    if(ry>0)  ky=1;
-                    else     ky =-1;
-                }
-                if(z!=0)
-                {
                     for(int i = 0; i <z; i++)
                     {
                         krok[0] +=kx;
@@ -82,7 +69,9 @@ int Hetman::rusz(Szachownica* s, int *poz)
 
                     }
                 }
+
             }
+
         }
     }
     return 1;
