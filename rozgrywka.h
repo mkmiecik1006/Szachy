@@ -6,18 +6,19 @@
 
 class Rozgrywka
 {
-    Szachownica szachownica;
+
     char kolej;
     bool aktywna;
 public:
     Rozgrywka();
-
+    Szachownica szachownica;
     int nowa();
     int zakoncz();
-    int ruch(int bierka, int* pole);
+    int ruch(Bierka* b, int* pole);
     void zmienkolej();
-    int roszada(int bierka);
     int szach();
+    bool czyaktywna();
+    char podajkolej() {return kolej;}
 };
 
 #endif // ROZGRYWKA_H

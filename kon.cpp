@@ -18,24 +18,22 @@ int Kon::rusz(Szachownica* s, int *poz)
             if(bierka!=0)
             {
 
-                Bierka* b = &(s->figury.find(bierka)->second); //znadujemy bierkę o numerze na pozycji
+                Bierka* b = s->figury.find(bierka)->second; //znadujemy bierkę o numerze na pozycji
                 if(kolor != b->podajkolor())  bicie = true;
                 else bicie = false;
 
             }
             if(bierka==0||bicie)
             {
-                if(s->czywolne(poz)==0)
+                if((pozycja[1]==y-2||pozycja[1]==y+2)&&(pozycja[0]==x-1||pozycja[0]==x+1))
                 {
-                    if((pozycja[1]==y-2||pozycja[1]==y+2)&&(pozycja[0]==x-1||pozycja[0]==x+1))
-                    {
-                        return 0;
-                    }
-                    else if((pozycja[0]==x-2||pozycja[0]==x+2)&&(pozycja[1]==y-1||pozycja[1]==y+1))
-                    {
-                        return 0;
-                    }
+                    return 0;
                 }
+                else if((pozycja[0]==x-2||pozycja[0]==x+2)&&(pozycja[1]==y-1||pozycja[1]==y+1))
+                {
+                    return 0;
+                }
+
             }
             else
             {

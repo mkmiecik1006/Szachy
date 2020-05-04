@@ -2,7 +2,7 @@
 #define SZACHOWNICA_H
 #include <map>
 #include "bierka.h"
-
+#include <memory>
 
 
 using namespace std;
@@ -16,7 +16,7 @@ public:
 
     int     tmp[8][8];
 
-    map <int, Bierka> figury;
+    map <int, Bierka*> figury;
 public:
     Szachownica()
     {
@@ -48,18 +48,20 @@ public:
     char    kolor(int n)
     {
 
-        Bierka* b = &(figury.find(n)->second);
+        Bierka* b = figury.find(n)->second;
         return b->podajkolor();
     }
     int     zbij(Bierka* b)
     {
         int* pole = b->podajpozycje();
-        b->zbij();
         plansza[pole[0]][pole[1]] = 0;
+        b->zbij();
         return 0;
+
 
     }//zbija bierkę o danym numerze
 
+    Bierka* znajdz(int* pole);
 
 };
 #endif // SZACHOWNICA_H

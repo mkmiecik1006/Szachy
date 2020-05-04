@@ -28,7 +28,7 @@ int Goniec::rusz(Szachownica* s, int* poz)
                 {
                     krok[0] +=kx;
                     krok[1] +=ky;
-                    if(i==abs(rx))  //ostatnie pole
+                    if(i==abs(rx)-1)  //ostatnie pole
                     {
                         int bierka = s->czywolne(krok);
                         if(bierka==0)
@@ -37,7 +37,7 @@ int Goniec::rusz(Szachownica* s, int* poz)
                         }
                         else //bicie
                         {
-                            Bierka* b = &(s->figury.find(bierka)->second); //znadujemy bierkę o numerze na pozycji
+                            Bierka* b = s->figury.find(bierka)->second; //znadujemy bierkę o numerze na pozycji
                             if(kolor != b->podajkolor())
                             {
                                 return 0;

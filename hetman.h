@@ -6,11 +6,9 @@
 class Hetman : public Bierka
 {
 public:
-    Hetman(char k, int n): Bierka(k, n)
+    Hetman(char k, int n, int x, int y) :Bierka(k, n, x, y)
     {
         zbity = false;
-        pozycja[0] = -1;
-        pozycja[-1] = -1;
     }
     int rusz(Szachownica* s, int* poz);
 };
