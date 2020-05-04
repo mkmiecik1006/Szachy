@@ -75,8 +75,8 @@ int Szachownica::przesun(Bierka* b, int* t)
         if(czywolne(t)==0)
         {
             int* p = b->podajpozycje();
+            plansza[t[0]][t[1]] = plansza[p[0]][p[1]];
             plansza[p[0]][p[1]] = 0;
-            plansza[t[0]][t[1]] = b->podajnumer();
             b->zmienpozycje(t);
             return 0;
 
