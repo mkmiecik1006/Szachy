@@ -10,12 +10,12 @@ int Hetman::rusz(Szachownica* s, int *poz)
     int bierka = s->czywolne(poz);
     if(zbity==false)
     {
-        if(x!=pozycja[0]&&y!=pozycja[1]) //ruszamy się gdzieś
+        if(x!=pozycja[0]||y!=pozycja[1]) //ruszamy się gdzieś
         {
             if(bierka!=0)
             {
 
-                Bierka* b = &(s->figury.find(bierka)->second); //znadujemy bierkę o numerze na pozycji
+                Bierka* b = s->figury.find(bierka)->second; //znadujemy bierkę o numerze na pozycji
                 if(kolor != b->podajkolor())  bicie = true;
                 else bicie = false;
 
@@ -59,7 +59,7 @@ int Hetman::rusz(Szachownica* s, int *poz)
                     {
                         krok[0] +=kx;
                         krok[1] +=ky;
-                        if(i==abs(rx))  //ostatnie pole
+                        if(i==z-1)  //ostatnie pole
                         {
                             int bierka = s->czywolne(krok);
                             if(bierka==0)
@@ -68,7 +68,7 @@ int Hetman::rusz(Szachownica* s, int *poz)
                             }
                             else //bicie
                             {
-                                Bierka* b = &(s->figury.find(bierka)->second); //znadujemy bierkę o numerze na pozycji
+                                Bierka* b = s->figury.find(bierka)->second; //znadujemy bierkę o numerze na pozycji
                                 if(kolor != b->podajkolor())
                                 {
                                     return 0;

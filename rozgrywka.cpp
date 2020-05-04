@@ -1,6 +1,8 @@
 #include "rozgrywka.h"
 #include "wieza.h"
 
+#include <stdexcept>
+
 Rozgrywka::Rozgrywka()
 {
     kolej = 'w';
@@ -28,10 +30,13 @@ void Rozgrywka::zmienkolej()
     else if(kolej=='b') kolej ='w';
 
 }
-
-int Rozgrywka::ruch(int bierka, int *pole)
+bool Rozgrywka::czyaktywna()
 {
-    Bierka* b = &(szachownica.figury.find(bierka)->second);
+    return aktywna;
+}
+
+int Rozgrywka::ruch(Bierka* b, int* pole)
+{
     if(kolej == b->podajkolor())
     {
         int x   = pole[0];               //jeżeli zajęte poda numer bierki
@@ -41,140 +46,95 @@ int Rozgrywka::ruch(int bierka, int *pole)
         {
             if(szachownica.czywolne(pole)==0)
             {
-                if(b->rusz(&szachownica, pole)==0)
+                try
                 {
-                    szachownica.przesun(b, pole);
-                    zmienkolej();
-                    return 0;
+                    if(b->rusz(&szachownica, pole)==0)
+                    {
+                        szachownica.przesun(b, pole);
+                        zmienkolej();
+                        return 0;
+                    }
+                    else
+                    {
+                        throw std::runtime_error("Nie prawidłowy ruch");
+                    }
                 }
-                else
+                catch(std::string wyjatek)
                 {
-                    return 1;
+                    if(wyjatek=="roszada1")
+                    {
+                        Bierka* b2;
+                        if(b->podajnumer()>0) b2 = szachownica.figury.find(9)->second;
+                        else if(b->podajnumer()<0) b2 = szachownica.figury.find(-9)->second;
+                        int pole2[2] = {3, pole[1]};
+                        szachownica.przesun(b, pole);
+                        szachownica.przesun(b2, pole2);
+                        zmienkolej();
+                        throw wyjatek;
+                    }
+                    else if(wyjatek=="roszada2")
+                    {
+                        Bierka* b2;
+                        if(b->podajnumer()>0) b2 = szachownica.figury.find(10)->second;
+                        else if(b->podajnumer()<0) b2 = szachownica.figury.find(-10)->second;
+                        int pole2[2] = {5, pole[1]};
+                        szachownica.przesun(b, pole);
+                        szachownica.przesun(b2, pole2);
+                        zmienkolej();
+                        throw wyjatek;
+                    }
+                    else if(wyjatek=="promocja")
+                    {
+                        //zmienkolej();
+                        throw wyjatek;
+                    }
                 }
 
             }
             else
             {
                 int bierka2 = szachownica.czywolne(pole);
-                Bierka* b2 = &(szachownica.figury.find(bierka2)->second);
+                Bierka* b2 = szachownica.figury.find(bierka2)->second;
                 if(b->podajkolor()!=b2->podajkolor())
                 {
-                    if(b->rusz(&szachownica, pole))
+                    if(b->rusz(&szachownica, pole)==0)
                     {
-                        szachownica.zbij(b2);
-                        szachownica.przesun(b, pole);
-                        zmienkolej();
-                        return 0;
+                        if(b2->podajnumer()==16||b2->podajnumer()==-16) throw std::runtime_error("Szach, bicie króla");
+                        else
+                        {
+                            b->pierwszyruch();
+                            szachownica.zbij(b2);
+                            szachownica.przesun(b, pole);
+                            zmienkolej();
+                            return 0;
+                        }
                     }
                 }
                 else
                 {
-                    return 1;
+                    throw std::runtime_error("Nie można bić własnych figur!");
                 }
             }
         }
+        else throw std::runtime_error("Wybrano pole poza planszą!");
     }
+    else throw std::runtime_error("Teraz nie jest twoja kolej!");
     return 1;
 }
 
-int Rozgrywka::roszada(int bierka)
-{
-    Bierka* w = &(szachownica.figury.find(bierka)->second);//wieza
-    int* p1;
-    int* p2;
-    int* p3;
-    Bierka* k; //krol
-    if(w->podajnumer()>0)
-    {
-        k = &(szachownica.figury.find(16)->second);
-    }
-    else
-    {
-        k = &(szachownica.figury.find(-16)->second);
-    }
-    if(w->podajkolor()==kolej)
-    {
-        if(abs(w->podajnumer())==9||abs(w->podajnumer())==10)
-        {
-            if(w->czypierwszy()==false && k->czypierwszy()==false &&szach()==1)
-            {
-                if(abs(w->podajnumer())==9)
-                {
-                       p1 = w->podajpozycje();
-                       p1[0] = 1;
-                       p2 = w->podajpozycje();
-                       p2[0] = 2;
-                       p3 = w->podajpozycje();
-                       p3[0] = 3;
-                       map<int, Bierka> ::iterator it = szachownica.figury.begin();
-
-
-                       while(it!=szachownica.figury.end())
-                       {
-                           if(w->podajkolor()!=it->second.podajkolor())
-                           {
-                                if(it->second.rusz(&szachownica, p2)==0||it->second.rusz(&szachownica, p3)==0)
-                                {
-                                    return 1;
-                                }
-                                it++;
-                           }
-                       }
-
-                       if(szachownica.czywolne(p1)==0&&szachownica.czywolne(p2)==0&&szachownica.czywolne(p1)==0)
-                       {
-                            k->zmienpozycje(p2);
-                            w->zmienpozycje(p3);
-                            return 0;
-                       }
-                }
-                else if(abs(w->podajnumer())==10)
-                {
-                    p1 = w->podajpozycje();
-                    p1[0] = 5;
-                    p2 = w->podajpozycje();
-                    p2[0] = 6;
-                    map<int, Bierka> ::iterator it = szachownica.figury.begin();
-
-
-                    while(it!=szachownica.figury.end())
-                    {
-                        if(w->podajkolor()!=it->second.podajkolor())
-                        {
-                             if(it->second.rusz(&szachownica, p1)==0||it->second.rusz(&szachownica, p2)==0)
-                             {
-                                 return 1;
-                             }
-                             it++;
-                        }
-                    }
-                    if(szachownica.czywolne(p1)&&szachownica.czywolne(p2))
-                    {
-                        k->zmienpozycje(p2);
-                        w->zmienpozycje(p1);
-                        return 0;
-                    }
-                }
-
-            }
-
-        }
-    }
-    return 1;
-}
 
 int Rozgrywka::szach()
 {
     Bierka* kw; //krol bialy
-    kw = &(szachownica.figury.find(16)->second);
+    kw = szachownica.figury.find(16)->second;
     int* pw = kw->podajpozycje();
     Bierka* kb; //krol czarny
+    kb = szachownica.figury.find(-16)->second;
     int* pb = kb->podajpozycje();
-    kb = &(szachownica.figury.find(-16)->second);
-    map<int, Bierka> ::iterator it = szachownica.figury.begin();
+    map<int, Bierka*> ::iterator it = szachownica.figury.begin();
     while(it!=szachownica.figury.end())
     {
-        if(it->second.rusz(&szachownica, pw)==0||it->second.rusz(&szachownica, pb)==0)
+        if(it->second->rusz(&szachownica, pw)==0||it->second->rusz(&szachownica, pb)==0)
         {
             return 0;
         }

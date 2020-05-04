@@ -26,15 +26,15 @@ public:
 
     }
 
-    Bierka(char k, int n)
+    Bierka(char k, int n, int x, int y)
     {
         kolor = k;
         numer = n;
         zbity = false;
-        pozycja[0] = -1;
-        pozycja[-1] = -1;
+        pozycja[0] = x;
+        pozycja[1] = y;
     }
-    int virtual rusz(Szachownica* s, int* pole)  {return 1;};
+    int virtual rusz(Szachownica* s, int* pole)  =0;
 
     char podajkolor();
     /*
@@ -57,12 +57,14 @@ public:
         if (zbity == false)
         {
             zbity =true;
+            pozycja[0] = -10;
+            pozycja[1] = -10;
             return 0;
         }
         return 1;
     }
 
-    int zmienpozycje(int* x)
+    int virtual zmienpozycje(int* x)
     {
         pozycja[0]=x[0];
         pozycja[1]=x[1];
@@ -73,13 +75,66 @@ public:
     {
         return pierwszy;
     }
+    void pierwszyruch()
+    {
+        pierwszy = true;
+    }
 
     int* podajpozycje()
     {
         return pozycja;
     }
 
+    int virtual promotuj(int p)
+    {
+        return p;
+    }
+
 
 };
+
+
+
+/*
+class Pion : public Bierka
+{
+    bool    pierwszy;   //czy wykonano pierwszy ruch
+
+public:
+
+    ~Pion()
+    {
+      // cout<<"destruktor"<<endl;
+    }
+    Pion(char k, int n) :Bierka(k, n){
+        //cout<<"konstruktor"<<kolor<<numer<<endl;
+        pozycja[0] = -1;
+        pozycja[1] = -1;
+        zbity = false;
+        pierwszy = false;
+    }
+    int rusz(Szachownica* s, int* pole);
+    int zmienpozycje(int *pole)
+    {
+        pozycja[0]=pole[0];
+        pozycja[1]=pole[1];
+        pierwszy = true;
+        return 0;
+    }
+
+    bool czypierwszy()
+    {
+        return pierwszy;
+    }
+
+    int promotuj()
+    {
+        return 0;
+    }
+
+
+
+};*/
+
 
 #endif // BIERKA_H

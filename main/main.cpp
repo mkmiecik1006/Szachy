@@ -1,72 +1,48 @@
 #include <iostream>
-#include <map>
-#include <vector>
-#include "C:\Users\acer\Documents\GitHub\Szachy\pion.h"
-#include "C:\Users\acer\Documents\GitHub\Szachy\bierka.h"
+#include <cstdlib>
+
 using namespace std;
 
-
-class A {
-private:
-    int Dana;
+class Pojazd {
 public:
-    A(int init) : Dana(init) {};
-    int value() const { return Dana; }
-    void operator-= (int i)
-{
- Dana -=i;
-}
-
+    virtual void zatrzymaj() {
+        cout << "zatrzymuje pojazd..?\n";
+    }
 };
-ostream& operator << (ostream& os, const A& dt)
-{
-    os <<dt.value();
-    return os;
-}
+
+class Samochod : public Pojazd {
+public:
+    void zatrzymaj() {
+        cout << "zatrzymuje samochod, puszczam gaz\n";
+    }
+};
+
+class Rower : public Pojazd {
+public:
+    void zatrzymaj() {
+        cout << "zatrzymuje rower, przestaje pedalowac\n";
+    }
+};
+
+class Rolki : public Pojazd {
+public:
+    void zatrzymaj() {
+        cout << "zatrzymuje rolki, przestaje ruszac nogami\n\n";
+    }
+};
+
 int main()
 {
+    Pojazd **tablica = new Pojazd*[3];
 
-        A a(15);
-        a -= 10;
-        cout << a;
+    tablica[0] = new Samochod();
+    tablica[1] = new Rower();
+    tablica[2] = new Rolki();
 
-    //cout<<sum2(v, 18);
+    for (int i = 0; i<3; i++) {
+        tablica[i]->zatrzymaj();
+    }
 
-   /* map <int, Bierka> mapa;
-
-    Pion* b1 = new Pion('w', 1);
-
-    mapa.insert( make_pair<int, Pion>(1, *b1));
-    mapa.insert( make_pair<int, Pion>(2, Pion('w', 2)));
-    mapa.insert( make_pair<int, Pion>(3, Pion('b', 3)));
-    mapa.insert( make_pair<int, Pion>(4, Pion('b', 4)));
-    map<int, Bierka> ::iterator it = mapa.begin();
-     mapa.insert(b2->podajnumer(), b2);
-    mapa.insert(b3->podajnumer(), b3);
-    mapa.insert(b4->podajnumer(), b4);*/
-    /*Bierka* a;
-    Bierka* b;
-    a= &(mapa.find(1)->second);
-    cout<<a->podajnumer()<<" :: "<<a->podajkolor()<<endl;
-    b = &(mapa.find(3)->second);
-    cout<<b->podajnumer()<<" :: "<<b->podajkolor()<<endl;
-
-    cout<<mapa.size()<<endl;
-    mapa.erase(mapa.find(1));
-    cout<<mapa.size()<<endl;
-   it = mapa.begin();
-
-    cout<< it->second.podajnumer()<<endl;
-    it++;
-    cout<< it->second.podajnumer()<<endl;
-    it++;
-    cout<< it->second.podajnumer()<<endl;
-    it++;
-    cout<< a->podajnumer()<<endl;
-    delete a;
-    cout<< a->podajnumer()<<endl;*/
-
-
+    system("pause");
     return 0;
 }
-
