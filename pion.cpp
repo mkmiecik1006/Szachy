@@ -15,7 +15,7 @@ int Pion::rusz(Szachownica* s, int* poz)
     if(zbity==false)
     {
         if(promocja==0)
-            {
+        {
             if( bierka == 0)
             {
                 if( pozycja[0]==x) //ta sama kolumna
