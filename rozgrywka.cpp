@@ -8,6 +8,7 @@ Rozgrywka::Rozgrywka()
     kolej = 'w';
     Szachownica szachownica();
     aktywna = false;
+    poprzedni = PoprzedniRuch();
 }
 
 int Rozgrywka::nowa()
@@ -50,9 +51,43 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                 {
                     if(b->rusz(&szachownica, pole)==0)
                     {
-                        szachownica.przesun(b, pole);
-                        zmienkolej();
-                        return 0;
+                            int p1[2];
+                            p1[0] = b->podajpozycje()[0];
+                            p1[1] = b->podajpozycje()[1];
+
+                            szachownica.przesuntmp(b, pole);
+                            if(b->podajnumer()>0)
+                            {
+                                if(szachw()!=0)
+                                {
+                                    poprzedni.ZapiszPoprzedni(kolej, b, p1);
+                                    szachownica.przesun(b, pole);
+                                    zmienkolej();
+                                    return 0;
+                                }
+                                else
+                                {
+                                    szachownica.cofnijtmp();
+                                    b->cofnijtmp();
+                                    throw std::runtime_error("Twój król jest szachowany!");
+                                }
+                            }
+                            else
+                            {
+                                if(szachb()!=0)
+                                {
+                                    poprzedni.ZapiszPoprzedni(kolej, b, p1);
+                                    szachownica.przesun(b, pole);
+                                    zmienkolej();
+                                    return 0;
+                                }
+                                else
+                                {
+                                    szachownica.cofnijtmp();
+                                    b->cofnijtmp();
+                                    throw std::runtime_error("Twój król jest szachowany!");
+                                }
+                            }
                     }
                     else
                     {
@@ -67,6 +102,7 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                         if(b->podajnumer()>0) b2 = szachownica.figury.find(9)->second;
                         else if(b->podajnumer()<0) b2 = szachownica.figury.find(-9)->second;
                         int pole2[2] = {3, pole[1]};
+                        poprzedni.ZapiszPoprzedni(kolej, b, b->podajpozycje(), b2, b2->podajpozycje());
                         szachownica.przesun(b, pole);
                         szachownica.przesun(b2, pole2);
                         zmienkolej();
@@ -78,6 +114,7 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                         if(b->podajnumer()>0) b2 = szachownica.figury.find(10)->second;
                         else if(b->podajnumer()<0) b2 = szachownica.figury.find(-10)->second;
                         int pole2[2] = {5, pole[1]};
+                        poprzedni.ZapiszPoprzedni(kolej, b, b->podajpozycje(), b2, b2->podajpozycje());
                         szachownica.przesun(b, pole);
                         szachownica.przesun(b2, pole2);
                         zmienkolej();
@@ -85,30 +122,91 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                     }
                     else if(wyjatek=="promocja")
                     {
-                        //zmienkolej();
+                        poprzedni.Promocja();
+                        zmienkolej();
                         throw wyjatek;
                     }
                 }
 
             }
-            else
+            else      //bicie
             {
                 int bierka2 = szachownica.czywolne(pole);
                 Bierka* b2 = szachownica.figury.find(bierka2)->second;
+                int p1[2];
+                int p2[2];
+                p1[0] = b->podajpozycje()[0];
+                p1[1] = b->podajpozycje()[1];
+                p2[0] = b2->podajpozycje()[0];
+                p2[1] = b2->podajpozycje()[1];
                 if(b->podajkolor()!=b2->podajkolor())
                 {
-                    if(b->rusz(&szachownica, pole)==0)
+                    try
                     {
-                        if(b2->podajnumer()==16||b2->podajnumer()==-16) throw std::runtime_error("Szach, bicie króla");
+                        if(b->bij(&szachownica, pole)==0)
+                        {
+                            if(b2->podajnumer()==16||b2->podajnumer()==-16) throw std::runtime_error("Szach, bicie króla");
+                            else
+                            {
+                                szachownica.zbij(b2, true);
+                                szachownica.przesuntmp(b, pole);
+                                if(b->podajnumer()>0)
+                                {
+                                    if(szachw()!=0)
+                                    {
+                                        b2->cofnijzbij();
+                                        poprzedni.ZapiszPoprzedni(kolej, b, p1, b2, p2);
+                                        szachownica.zbij(b2);
+                                        szachownica.przesun(b, pole);
+                                        zmienkolej();
+                                        return 0;
+                                    }
+                                    else
+                                    {
+                                        szachownica.cofnijtmp();
+                                        b2->cofnijzbij();
+                                        b->cofnijtmp();
+                                        b2->cofnijtmp();
+                                        throw std::runtime_error("Twój król jest szachowany!");
+                                    }
+                                }
+                                else
+                                {
+                                    if(szachb()!=0)
+                                    {   b2->cofnijzbij();
+                                        poprzedni.ZapiszPoprzedni(kolej, b, p1, b2, p2);
+                                        szachownica.zbij(b2);
+                                        szachownica.przesun(b, pole);
+                                        zmienkolej();
+                                        return 0;
+                                    }
+                                    else
+                                    {
+                                        szachownica.cofnijtmp();
+                                        b2->cofnijzbij();
+                                        b->cofnijtmp();
+                                        b2->cofnijtmp();
+                                        throw std::runtime_error("Twój król jest szachowany!");
+                                    }
+                                }
+
+                            }
+                        }
                         else
                         {
-                            b->pierwszyruch();
-                            szachownica.zbij(b2);
-                            szachownica.przesun(b, pole);
-                            zmienkolej();
-                            return 0;
+                            throw std::runtime_error("Nie prawidłowy ruch");
                         }
                     }
+                    catch(std::string wyjatek)
+                    {
+                        if(wyjatek=="promocja")
+                        {
+                            poprzedni.Promocja();
+                            zmienkolej();
+                            throw wyjatek;
+                        }
+                    }
+
                 }
                 else
                 {
@@ -131,10 +229,19 @@ int Rozgrywka::szach()
     Bierka* kb; //krol czarny
     kb = szachownica.figury.find(-16)->second;
     int* pb = kb->podajpozycje();
-    map<int, Bierka*> ::iterator it = szachownica.figury.begin();
-    while(it!=szachownica.figury.end())
+    map<int, Bierka*> ::iterator it = szachownica.figury.find(-16);
+    for(int i =0; i<16; i++)
     {
-        if(it->second->rusz(&szachownica, pw)==0||it->second->rusz(&szachownica, pb)==0)
+        if(it->second->bij(&szachownica, pw)==0)   //sprawdzamy czy któraś z bierek przeciwnika atakuje króla
+        {
+            return 0;
+        }
+        it++;
+    }
+    it = szachownica.figury.find(1);
+    for(int i =0; i<16; i++)
+    {
+        if(it->second->bij(&szachownica, pb)==0)   //sprawdzamy czy któraś z bierek przeciwnika atakuje króla
         {
             return 0;
         }
@@ -144,3 +251,66 @@ int Rozgrywka::szach()
     return 1;
 }
 
+
+int Rozgrywka::cofnij()
+{
+    if(poprzedni.PodajAktywny())
+    {
+
+        if(poprzedni.PodajBicie())
+        {
+            szachownica.przesun(poprzedni.PodajPoprzednia(), poprzedni.PodajPozycja());
+            szachownica.przesun(poprzedni.PodajBita(), poprzedni.PodajPozycjaBita());
+            poprzedni.PodajBita()->cofnijzbij();
+            if(!poprzedni.PodajPierwszy()) poprzedni.PodajPoprzednia()->ustawPierwszy(false);
+            if(!poprzedni.PodajPierwszy()) poprzedni.PodajBita()->ustawPierwszy(false);
+        }
+        else //jeżeli nie było bicia
+        {
+            szachownica.przesun(poprzedni.PodajPoprzednia(), poprzedni.PodajPozycja());
+            if(!poprzedni.PodajPierwszy()) poprzedni.PodajPoprzednia()->ustawPierwszy(false);
+        }
+
+        if(poprzedni.PodajPromocja())
+        {
+            poprzedni.PodajPoprzednia()->promotuj(1);
+        }
+        poprzedni.ZmienAktywny();
+        zmienkolej();
+    }
+    return 0;
+}
+
+int Rozgrywka::szachw()
+{
+    Bierka* kw; //krol bialy
+    kw = szachownica.figury.find(16)->second;
+    int* pw = kw->podajtmp();
+    map<int, Bierka*> ::iterator it = szachownica.figury.find(-16);
+    for(int i =0; i<16; i++)
+    {
+        if(it->second->bij(&szachownica, pw, true)==0)   //sprawdzamy czy któraś z bierek przeciwnika atakuje króla
+        {
+            return 0;
+        }
+        it++;
+    }
+    return 1;
+}
+
+int Rozgrywka::szachb()
+{
+    Bierka* kb; //krol bialy
+    kb = szachownica.figury.find(-16)->second;
+    int* pb = kb->podajtmp();
+    map<int, Bierka*> ::iterator it = szachownica.figury.find(1);
+    for(int i = 0; i<16; i++)
+    {
+        if(it->second->bij(&szachownica, pb, true)==0)    //sprawdzamy czy któraś z bierek przeciwnika atakuje króla
+        {
+            return 0;
+        }
+        it++;
+    }
+    return 1;
+}

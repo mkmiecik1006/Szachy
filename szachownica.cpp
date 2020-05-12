@@ -14,7 +14,7 @@ int Szachownica::wyczysc()
     map<int, Bierka*> ::iterator it = figury.begin();
     while(it!=figury.end())
     {
-        delete it->second;
+        //delete it->second;
         it++;
     }
     figury.clear();
@@ -23,51 +23,13 @@ int Szachownica::wyczysc()
         for(int j=0; j<8;j++)
         {
             plansza[i][j]   = 0;
-            tmp[i][j]       = 0;
+            tmp[i][j]   = 0;
         }
     }
     return 0;
 }
 
 
-/*int     Szachownica::czywolne(int* t)
-{
-    return plansza[t[0]] [t[1]];//zwraca wartość bierki na danym polu
-}
-*/
-
-/*
-int Szachownica::dodaj(Bierka b, int* t)
-{
-    if(czywolne(t)==0)
-    {
-        b.zmienpozycje(t);
-        plansza[t[0]][t[1]] = b.podajnumer();
-        return 0;
-    }
-    else
-    {
-        return 1;
-
-    }
-}*/
-int Szachownica::usun(Bierka* b)
-{
-    int* p = b->podajpozycje();
-    if(p!=NULL)
-    {
-        int i[2] = {-1, -1};
-        b->zmienpozycje(i);
-        plansza[p[0]][p[1]] = 0;
-        figury.erase(figury.find(b->podajnumer()));
-        return 0;
-    }
-    else
-    {
-        return 1;
-    }
-
-}
 
 int Szachownica::przesun(Bierka* b, int* t)
 {
@@ -75,17 +37,47 @@ int Szachownica::przesun(Bierka* b, int* t)
         if(czywolne(t)==0)
         {
             int* p = b->podajpozycje();
-            plansza[t[0]][t[1]] = plansza[p[0]][p[1]];
             plansza[p[0]][p[1]] = 0;
-            b->zmienpozycje(t);
-            return 0;
-
+            plansza[t[0]][t[1]] = b->podajnumer();
+            tmp[t[0]][t[1]] = b->podajnumer();
+            tmp[p[0]][p[1]] = 0;
+            try
+            {
+                b->zmienpozycje(t);
+                return 0;
+            }
+            catch(string wyjatek)
+            {
+                throw wyjatek;
+            }
         }
         else
         {
             return 1;
         }
+}
+int Szachownica::przesuntmp(Bierka* b, int* t)
+{
 
+        if(czywolne(t)==0)
+        {
+            int* p = b->podajpozycje();
+            tmp[t[0]][t[1]] = b->podajnumer();
+            tmp[p[0]][p[1]] = 0;
+            try
+            {
+                b->zmientmp(t);
+                return 0;
+            }
+            catch(string wyjatek)
+            {
+                throw wyjatek;
+            }
+        }
+        else
+        {
+            return 1;
+        }
 }
 
 Bierka* Szachownica::znajdz(int* pole)
@@ -177,6 +169,8 @@ int Szachownica::ustaw()
     plansza[7][6] = -8;
 
     ///////////////////////////
+
+
     tmp[0][0] = 9;
     tmp[1][0] = 11;
     tmp[2][0] = 13;
@@ -204,19 +198,29 @@ int Szachownica::ustaw()
     tmp[6][7] = -12;
     tmp[7][7] = -10;
 
-    tmp[6][0] = -1;
-    tmp[6][1] = -2;
-    tmp[6][2] = -3;
-    tmp[6][3] = -4;
-    tmp[6][4] = -5;
-    tmp[6][5] = -6;
+    tmp[0][6] = -1;
+    tmp[1][6] = -2;
+    tmp[2][6] = -3;
+    tmp[3][6] = -4;
+    tmp[4][6] = -5;
+    tmp[5][6] = -6;
     tmp[6][6] = -7;
-    tmp[6][7] = -8;
+    tmp[7][6] = -8;
+
     return 0;
 }
 
 
-
+void Szachownica::cofnijtmp()
+{
+    for(int i = 0; i<8; i++)
+    {
+        for(int j =0; j<8; j++)
+        {
+            tmp[i][j] = plansza[i][j];
+        }
+    }
+}
 
 
 

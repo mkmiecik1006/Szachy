@@ -187,7 +187,7 @@ void MainWindow::on_Ruch_clicked()
                 if(OdczytajPozycje(tx1, pozycja1)==0&& OdczytajPozycje(tx2, pozycja2)==0)
                 {
                     bierka = rozgrywka.szachownica.znajdz(pozycja1);
-                    b = bierka->podajnumer();
+                    b = bierka->narysuj();
                     if(rozgrywka.ruch(bierka, pozycja2)==0)
                     {
                         ZmienIkone(b, pozycja2);
@@ -208,7 +208,7 @@ void MainWindow::on_Ruch_clicked()
                     Bierka* bierka2;
                     if(bierka->podajnumer()>0) bierka2 = rozgrywka.szachownica.figury.find(9)->second;
                     else if(bierka->podajnumer()<0) bierka2 = rozgrywka.szachownica.figury.find(-9)->second;
-                    int b2 = bierka2->podajnumer();
+                    int b2 = bierka2->narysuj();
                     int pozycja3[2] = {0, pozycja1[1]};
                     int pozycja4[2] = {3, pozycja1[1]};
                     ZmienIkone(b, pozycja2);
@@ -223,7 +223,7 @@ void MainWindow::on_Ruch_clicked()
                     Bierka* bierka2;
                     if(bierka->podajnumer()>0) bierka2 = rozgrywka.szachownica.figury.find(10)->second;
                     else if(bierka->podajnumer()<0) bierka2 = rozgrywka.szachownica.figury.find(-10)->second;
-                    int b2 = bierka2->podajnumer();
+                    int b2 = bierka2->narysuj();
                     int pozycja3[2] = {7, pozycja1[1]};
                     int pozycja4[2] = {5, pozycja1[1]};
                     ZmienIkone(b, pozycja2);
@@ -234,15 +234,14 @@ void MainWindow::on_Ruch_clicked()
                 }
                 else if(wyjatek == "promocja")
                 {
-                    Promocja prom(bierka, this);
-                    prom.setModal(true);
-                    prom.exec();
-
-
-                    b = bierka->podajnumer();
+                    Promocja* prom = new Promocja(bierka, this);
+                    prom->setModal(true);
+                    prom->exec();
+                    b = bierka->narysuj();
                     ZmienIkone(0, pozycja1);
                     ZmienIkone(b, pozycja2);
-                    rozgrywka.zmienkolej();
+                    rozgrywka.poprzedni.Promocja();
+                    delete prom;
                 }
             }
         }
@@ -256,6 +255,7 @@ void MainWindow::on_Ruch_clicked()
     else QMessageBox::about(this, "Błąd", "Rozpocznij rozgrywkę!");
     ui->lineEdit->clear();
     ui->lineEdit_2->clear();
+    if(rozgrywka.poprzedni.PodajAktywny()) ui->btnCofnij->setEnabled(true);
 }
 
 int MainWindow::OdczytajPozycje(QString txt, int* pozycja)
@@ -955,4 +955,41 @@ void MainWindow::on_H8_clicked()
         if(ui->lineEdit->text().isEmpty()) ui->lineEdit->setText("H8");
         else if(ui->lineEdit_2->text().isEmpty()) ui->lineEdit_2->setText("H8");
     }
+}
+
+void MainWindow::on_btnCofnij_clicked()
+{
+    int pozycja1[2];
+    int pozycja3[2];
+    bool bicie = rozgrywka.poprzedni.PodajBicie();
+    Bierka* bierka = rozgrywka.poprzedni.PodajPoprzednia();
+    int* pozycja2 = rozgrywka.poprzedni.PodajPozycja();
+    pozycja1[0] = bierka->podajpozycje()[0];
+    pozycja1[1] = bierka->podajpozycje()[1];
+    Bierka* bierka2;
+    int* pozycja4;
+    if(bicie)
+    {
+        bierka2 = rozgrywka.poprzedni.PodajBita();
+        pozycja3[0] = bierka2->podajpozycje()[0];
+        pozycja3[1] = bierka2->podajpozycje()[1];
+        pozycja4 = rozgrywka.poprzedni.PodajPozycjaBita();
+    }
+    rozgrywka.cofnij();
+
+    int b1 = bierka->narysuj();
+    ZmienIkone(0, pozycja1);
+    ZmienIkone(b1, pozycja2);
+
+    if(bicie)
+    {
+        int b2 = bierka2->narysuj();
+        if(pozycja3[0]>=0&&pozycja3[1]>=0)ZmienIkone(0, pozycja3);
+        ZmienIkone(b2, pozycja4);
+
+    }
+
+    if(!rozgrywka.poprzedni.PodajAktywny()) ui->btnCofnij->setEnabled(false);
+    if(rozgrywka.podajkolej()=='w') ui->lbKolej->setText("Kolej: BIAŁE");
+    else if(rozgrywka.podajkolej()=='b') ui->lbKolej->setText("Kolej: CZARNE");
 }

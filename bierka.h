@@ -8,10 +8,12 @@ class Bierka
 protected:
     char    kolor;
     int     numer;
-    //string  nazwa;
+    int     rysuj;
     bool    zbity;  //domyślnie figury nie są zbite
     int     pozycja[2];
+    int     tmp[2];
     bool    pierwszy;
+
 
 
 public:
@@ -33,108 +35,71 @@ public:
         zbity = false;
         pozycja[0] = x;
         pozycja[1] = y;
+        tmp[0] = x;
+        tmp[1] = y;
+        rysuj = n;
+        pierwszy = false;
     }
-    int virtual rusz(Szachownica* s, int* pole)  =0;
+    int virtual rusz(Szachownica* s, int* pole, bool t = false)  =0;
 
-    char podajkolor();
-    /*
-    {
-        return kolor;
-    }*/
+    int virtual bij(Szachownica* s, int* pole, bool t = false)  =0;
 
-    int podajnumer()
-    {
-        return numer;
-    }
+    char podajkolor(){return kolor;}
 
-    int czyzbity()
-    {
-        return zbity;
-    }
+    int podajnumer(){ return numer;}
+
+    int czyzbity() {return zbity;}
 
     int zbij()
     {
         if (zbity == false)
         {
             zbity =true;
-            pozycja[0] = -10;
-            pozycja[1] = -10;
             return 0;
         }
         return 1;
     }
 
-    int virtual zmienpozycje(int* x)
+    int cofnijzbij()
     {
-        pozycja[0]=x[0];
-        pozycja[1]=x[1];
+        zbity = false;
         return 0;
     }
 
-    bool czypierwszy()
-    {
-        return pierwszy;
-    }
-    void pierwszyruch()
+    int virtual zmienpozycje(int* x)
     {
         pierwszy = true;
+        pozycja[0]=x[0];
+        pozycja[1]=x[1];
+        tmp[0]=x[0];
+        tmp[1]=x[1];
+        return 0;
     }
 
-    int* podajpozycje()
+    int zmientmp(int* x)
     {
-        return pozycja;
+        tmp[0]=x[0];
+        tmp[1]=x[1];
+        return 0;
     }
 
-    int virtual promotuj(int p)
+    bool czypierwszy(){ return pierwszy; }
+    void pierwszyruch() { pierwszy = true;}
+    void ustawPierwszy(bool p) {pierwszy = p;}
+    int* podajpozycje(){  return pozycja;}
+    int* podajtmp(){  return tmp;}
+    int virtual promotuj(int p) { return p;}
+    int narysuj() {return rysuj;}
+
+    void cofnijtmp()
     {
-        return p;
+        tmp[0]=pozycja[0];
+        tmp[1]=pozycja[1];
     }
 
 
 };
 
-
-
-/*
-class Pion : public Bierka
-{
-    bool    pierwszy;   //czy wykonano pierwszy ruch
-
-public:
-
-    ~Pion()
-    {
-      // cout<<"destruktor"<<endl;
-    }
-    Pion(char k, int n) :Bierka(k, n){
-        //cout<<"konstruktor"<<kolor<<numer<<endl;
-        pozycja[0] = -1;
-        pozycja[1] = -1;
-        zbity = false;
-        pierwszy = false;
-    }
-    int rusz(Szachownica* s, int* pole);
-    int zmienpozycje(int *pole)
-    {
-        pozycja[0]=pole[0];
-        pozycja[1]=pole[1];
-        pierwszy = true;
-        return 0;
-    }
-
-    bool czypierwszy()
-    {
-        return pierwszy;
-    }
-
-    int promotuj()
-    {
-        return 0;
-    }
-
-
-
-};*/
 
 
 #endif // BIERKA_H

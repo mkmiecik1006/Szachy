@@ -6,21 +6,14 @@
 
 class Krol : public Bierka
 {
-    bool    pierwszy;
 public:
     Krol(char k, int n, int x, int y) :Bierka(k, n, x, y)
     {
         zbity = false;
         pierwszy = false;
     }
-    int rusz(Szachownica* s, int* poz);
-    int zmienpozycje(int *pole)
-    {
-        pozycja[0]=pole[0];
-        pozycja[1]=pole[1];
-        pierwszy = true;
-        return 0;
-    }
+    int rusz(Szachownica* s, int* poz, bool t = false);
+    int bij(Szachownica* s, int* pole, bool t = false);
     bool czypierwszy()
     {
         return pierwszy;
