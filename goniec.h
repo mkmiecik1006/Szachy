@@ -13,7 +13,8 @@ public:
         zbity = false;
 
     }
-    int rusz(Szachownica* s, int* poz);
+    int rusz(Szachownica* s, int* poz, bool t = false);
+    int bij(Szachownica* s, int* pole, bool t = false);
 };
 
 #endif // GONIEC_H

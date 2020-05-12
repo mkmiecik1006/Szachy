@@ -978,16 +978,15 @@ void MainWindow::on_btnCofnij_clicked()
     rozgrywka.cofnij();
 
     int b1 = bierka->narysuj();
-    ZmienIkone(b1, pozycja2);
     ZmienIkone(0, pozycja1);
-
+    ZmienIkone(b1, pozycja2);
 
     if(bicie)
     {
         int b2 = bierka2->narysuj();
-
-        ZmienIkone(b2, pozycja4);
         if(pozycja3[0]>=0&&pozycja3[1]>=0)ZmienIkone(0, pozycja3);
+        ZmienIkone(b2, pozycja4);
+
     }
 
     if(!rozgrywka.poprzedni.PodajAktywny()) ui->btnCofnij->setEnabled(false);

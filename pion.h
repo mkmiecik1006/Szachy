@@ -26,7 +26,8 @@ public:
         pierwszy = false;
         promocja = 1;
     }
-    int rusz(Szachownica* s, int* pole);
+    int rusz(Szachownica* s, int* pole, bool t = false);
+    int bij(Szachownica* s, int* pole, bool t = false);
     int zmienpozycje(int *pole);
 
 
