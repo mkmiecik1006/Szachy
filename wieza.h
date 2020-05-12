@@ -6,7 +6,6 @@
 
 class Wieza : public Bierka
 {
-    bool    pierwszy;
 public:
     Wieza(char k, int n, int x, int y) :Bierka(k, n, x, y)
     {

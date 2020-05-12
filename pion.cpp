@@ -14,7 +14,7 @@ int Pion::rusz(Szachownica* s, int* poz)
     bool bicie = false;
     if(zbity==false)
     {
-        if(promocja==0)
+        if(promocja==1)
         {
             if( bierka == 0)
             {
@@ -271,8 +271,8 @@ int Pion::rusz(Szachownica* s, int* poz)
 int Pion::promotuj(int p)
 {
     promocja = p;
-    if(numer >0)numer = p;
-    else numer = -p;
+    if(numer >0)rysuj = p;
+    else rysuj = -p;
     return 0;
 }
 int Pion::zmienpozycje(int* pole)
@@ -280,7 +280,7 @@ int Pion::zmienpozycje(int* pole)
     pozycja[0]=pole[0];
     pozycja[1]=pole[1];
     pierwszy = true;
-    if(promocja==0 &&((numer>0&& pole[1]==7)||(numer<0 &&pole[1]==0)))
+    if(promocja==1 &&((numer>0&& pole[1]==7)||(numer<0 &&pole[1]==0)))
     {
         std::string wyjatek = "promocja";
         throw wyjatek;

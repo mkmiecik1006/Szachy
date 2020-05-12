@@ -8,6 +8,7 @@ class Bierka
 protected:
     char    kolor;
     int     numer;
+    int     rysuj;
     //string  nazwa;
     bool    zbity;  //domyślnie figury nie są zbite
     int     pozycja[2];
@@ -33,24 +34,16 @@ public:
         zbity = false;
         pozycja[0] = x;
         pozycja[1] = y;
+        rysuj = n;
+        pierwszy = false;
     }
     int virtual rusz(Szachownica* s, int* pole)  =0;
 
-    char podajkolor();
-    /*
-    {
-        return kolor;
-    }*/
+    char podajkolor(){return kolor;}
 
-    int podajnumer()
-    {
-        return numer;
-    }
+    int podajnumer(){ return numer;}
 
-    int czyzbity()
-    {
-        return zbity;
-    }
+    int czyzbity() {return zbity;}
 
     int zbij()
     {
@@ -64,6 +57,12 @@ public:
         return 1;
     }
 
+    int cofnijzbij()
+    {
+        zbity = false;
+        return 0;
+    }
+
     int virtual zmienpozycje(int* x)
     {
         pozycja[0]=x[0];
@@ -71,24 +70,13 @@ public:
         return 0;
     }
 
-    bool czypierwszy()
-    {
-        return pierwszy;
-    }
-    void pierwszyruch()
-    {
-        pierwszy = true;
-    }
+    bool czypierwszy(){ return pierwszy; }
+    void pierwszyruch() { pierwszy = true;}
+    void ustawPierwszy(bool p) {pierwszy = p;}
+    int* podajpozycje(){  return pozycja;}
 
-    int* podajpozycje()
-    {
-        return pozycja;
-    }
-
-    int virtual promotuj(int p)
-    {
-        return p;
-    }
+    int virtual promotuj(int p) { return p;}
+    int narysuj() {return rysuj;}
 
 
 };

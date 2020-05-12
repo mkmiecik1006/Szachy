@@ -10,7 +10,6 @@ class Szachownica;
 
 class Pion : public Bierka
 {
-    bool    pierwszy;   //czy wykonano pierwszy ruch
     int promocja;
 
 public:
@@ -25,15 +24,12 @@ public:
 
         zbity = false;
         pierwszy = false;
-        promocja = 0;
+        promocja = 1;
     }
     int rusz(Szachownica* s, int* pole);
     int zmienpozycje(int *pole);
 
-    bool czypierwszy()
-    {
-        return pierwszy;
-    }
+
 
     int promotuj(int p);
 

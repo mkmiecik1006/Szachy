@@ -151,6 +151,8 @@ private slots:
 
     void on_H8_clicked();
 
+    void on_btnCofnij_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

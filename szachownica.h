@@ -14,8 +14,6 @@ private:
 public:
     int     plansza[8][8];
 
-    int     tmp[8][8];
-
     map <int, Bierka*> figury;
 public:
     Szachownica()

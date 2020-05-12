@@ -14,7 +14,7 @@ int Szachownica::wyczysc()
     map<int, Bierka*> ::iterator it = figury.begin();
     while(it!=figury.end())
     {
-        delete it->second;
+        //delete it->second;
         it++;
     }
     figury.clear();
@@ -23,7 +23,7 @@ int Szachownica::wyczysc()
         for(int j=0; j<8;j++)
         {
             plansza[i][j]   = 0;
-            tmp[i][j]       = 0;
+
         }
     }
     return 0;
@@ -75,10 +75,18 @@ int Szachownica::przesun(Bierka* b, int* t)
         if(czywolne(t)==0)
         {
             int* p = b->podajpozycje();
-            plansza[t[0]][t[1]] = plansza[p[0]][p[1]];
+            plansza[t[0]][t[1]] = b->podajnumer();
             plansza[p[0]][p[1]] = 0;
-            b->zmienpozycje(t);
-            return 0;
+            try
+            {
+                b->zmienpozycje(t);
+                return 0;
+            }
+            catch(string wyjatek)
+            {
+                throw wyjatek;
+            }
+
 
         }
         else
@@ -177,41 +185,7 @@ int Szachownica::ustaw()
     plansza[7][6] = -8;
 
     ///////////////////////////
-    tmp[0][0] = 9;
-    tmp[1][0] = 11;
-    tmp[2][0] = 13;
-    tmp[3][0] = 15;
-    tmp[4][0] = 16;
-    tmp[5][0] = 14;
-    tmp[6][0] = 12;
-    tmp[7][0] = 10;
 
-    tmp[0][1] = 1;
-    tmp[1][1] = 2;
-    tmp[2][1] = 3;
-    tmp[3][1] = 4;
-    tmp[4][1] = 5;
-    tmp[5][1] = 6;
-    tmp[6][1] = 7;
-    tmp[7][1] = 8;
-
-    tmp[0][7] = -9;
-    tmp[1][7] = -11;
-    tmp[2][7] = -13;
-    tmp[3][7] = -15;
-    tmp[4][7] = -16;
-    tmp[5][7] = -14;
-    tmp[6][7] = -12;
-    tmp[7][7] = -10;
-
-    tmp[6][0] = -1;
-    tmp[6][1] = -2;
-    tmp[6][2] = -3;
-    tmp[6][3] = -4;
-    tmp[6][4] = -5;
-    tmp[6][5] = -6;
-    tmp[6][6] = -7;
-    tmp[6][7] = -8;
     return 0;
 }
 
