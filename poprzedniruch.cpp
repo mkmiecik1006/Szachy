@@ -6,7 +6,7 @@ PoprzedniRuch::PoprzedniRuch()
     bita = NULL;
     pozycja[0] = -10;
     pozycja[1] = -10;
-
+    licznik = 0;
     pozycjabita[0] = -10;
     pozycjabita[1] = -10;
     bicie = false;
@@ -17,7 +17,7 @@ PoprzedniRuch::PoprzedniRuch()
     pierwszybity = true;
 }
 
-int PoprzedniRuch::ZapiszPoprzedni(char k, Bierka *b, int * p, Bierka* bb, int* pb)
+int PoprzedniRuch::ZapiszPoprzedni(int l, char k, Bierka *b, int * p, Bierka* bb, int* pb)
 {
 
     kolej = k;
@@ -28,6 +28,7 @@ int PoprzedniRuch::ZapiszPoprzedni(char k, Bierka *b, int * p, Bierka* bb, int* 
     pozycja[0] = p[0];
     pozycja[1] = p[1];
     pierwszy = b->czypierwszy();
+    licznik = l;
     if(pb!=NULL && bb!= NULL )
     {
         bicie = true;

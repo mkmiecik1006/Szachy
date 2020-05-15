@@ -31,7 +31,7 @@ int Szachownica::wyczysc()
 
 
 
-int Szachownica::przesun(Bierka* b, int* t)
+int Szachownica::przesun(Bierka* b, int t[2])
 {
 
         if(czywolne(t)==0)
@@ -56,14 +56,15 @@ int Szachownica::przesun(Bierka* b, int* t)
             return 1;
         }
 }
-int Szachownica::przesuntmp(Bierka* b, int* t)
+int Szachownica::przesuntmp(Bierka* b, int t[2])
 {
 
-        if(czywolne(t)==0)
+        if(czywolne(t, true)==0)
         {
             int* p = b->podajpozycje();
-            tmp[t[0]][t[1]] = b->podajnumer();
             tmp[p[0]][p[1]] = 0;
+            tmp[t[0]][t[1]] = b->podajnumer();
+
             try
             {
                 b->zmientmp(t);

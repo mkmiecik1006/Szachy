@@ -3,7 +3,7 @@
 #include "szachownica.h"
 #include "bierka.h"
 
-int Kon::rusz(Szachownica* s, int *poz, bool t)
+int Kon::rusz(Szachownica* s, int poz[2], bool t)
 {
     if(s->czywolne(poz))
     {}
@@ -40,7 +40,7 @@ int Kon::rusz(Szachownica* s, int *poz, bool t)
     return 1;
 }
 
-int Kon::bij(Szachownica* s, int* poz, bool t)
+int Kon::bij(Szachownica* s, int poz[2], bool t)
 {
     if(s->czywolne(poz))
     {}

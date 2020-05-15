@@ -4,7 +4,7 @@
 //#include "szachownica.cpp"
 
 
-int Goniec::rusz(Szachownica* s, int* poz, bool t)
+int Goniec::rusz(Szachownica* s, int poz[2], bool t)
 {
 
     int x   = poz[0];               //pozycja na którą chcemy się ruszyć
@@ -54,7 +54,7 @@ int Goniec::rusz(Szachownica* s, int* poz, bool t)
     return 1;
 }
 
-int Goniec::bij(Szachownica* s, int* pole, bool t)
+int Goniec::bij(Szachownica* s, int pole[2], bool t)
 {
     int x   = pole[0];               //pozycja na którą chcemy się ruszyć
     int y   = pole[1];

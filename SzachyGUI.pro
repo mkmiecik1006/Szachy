@@ -24,7 +24,8 @@ SOURCES += main.cpp\
         krol.cpp \
         rozgrywka.cpp \
     promocja.cpp \
-    poprzedniruch.cpp
+    poprzedniruch.cpp \
+    plansza.cpp
 
 HEADERS  += mainwindow.h\
         bierka.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h\
         krol.h \
         rozgrywka.h \
     promocja.h \
-    poprzedniruch.h
+    poprzedniruch.h \
+    plansza.h
 
 FORMS    += mainwindow.ui \
     promocja.ui

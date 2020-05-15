@@ -10,12 +10,14 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    bool r; //flaga remisu
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     int ZmienIkone(int bierka, int* pozycja);
     int OdczytajPozycje(QString txt, int* pozycja);
-    
+    void koniec(char k);
+    void remis();
 private slots:
     void on_A1_clicked();
 
@@ -152,6 +154,14 @@ private slots:
     void on_H8_clicked();
 
     void on_btnCofnij_clicked();
+
+    void on_Czysc_clicked();
+
+    void on_Poddana_clicked();
+
+    void on_Remis_clicked();
+
+    void on_Reklamacja_clicked();
 
 private:
     Ui::MainWindow *ui;

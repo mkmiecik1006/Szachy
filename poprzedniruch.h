@@ -10,6 +10,7 @@ class PoprzedniRuch
     int pozycja[2];
     Bierka* bita;
     int pozycjabita[2];
+    int licznik;
     bool bicie;
     char kolej;
     bool promocja;
@@ -19,7 +20,7 @@ class PoprzedniRuch
 public:
     PoprzedniRuch();
 
-    int ZapiszPoprzedni(char k, Bierka* b, int* p, Bierka* bb = NULL, int* pb = NULL);
+    int ZapiszPoprzedni(int l, char k, Bierka* b, int* p, Bierka* bb = NULL, int* pb = NULL);
     Bierka* PodajPoprzednia();
     int* PodajPozycja();
     Bierka* PodajBita();
