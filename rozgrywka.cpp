@@ -9,12 +9,15 @@ Rozgrywka::Rozgrywka()
     Szachownica szachownica();
     aktywna = false;
     poprzedni = PoprzedniRuch();
+    Plansza historia();
+    wygrana = ' ';
 }
 
 int Rozgrywka::nowa()
 {
     szachownica.ustaw();
     kolej = 'w';
+    historia.push_back(Plansza(szachownica.plansza, kolej));
     aktywna = true;
     return 0;
 }
@@ -36,7 +39,7 @@ bool Rozgrywka::czyaktywna()
     return aktywna;
 }
 
-int Rozgrywka::ruch(Bierka* b, int* pole)
+int Rozgrywka::ruch(Bierka* b, int pole[2])
 {
     if(kolej == b->podajkolor())
     {
@@ -60,9 +63,13 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                             {
                                 if(szachw()!=0)
                                 {
-                                    poprzedni.ZapiszPoprzedni(kolej, b, p1);
+                                    poprzedni.ZapiszPoprzedni(licznik, kolej, b, p1);
                                     szachownica.przesun(b, pole);
                                     zmienkolej();
+                                    if(abs(b->narysuj())==1) licznik = 0;
+                                    else licznik++;
+                                    historia.push_back(Plansza(szachownica.plansza, kolej));
+
                                     return 0;
                                 }
                                 else
@@ -76,9 +83,12 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                             {
                                 if(szachb()!=0)
                                 {
-                                    poprzedni.ZapiszPoprzedni(kolej, b, p1);
+                                    poprzedni.ZapiszPoprzedni(licznik, kolej, b, p1);
                                     szachownica.przesun(b, pole);
                                     zmienkolej();
+                                    if(abs(b->narysuj())==1) licznik = 0;
+                                    else licznik++;
+                                    historia.push_back(Plansza(szachownica.plansza, kolej));
                                     return 0;
                                 }
                                 else
@@ -102,10 +112,12 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                         if(b->podajnumer()>0) b2 = szachownica.figury.find(9)->second;
                         else if(b->podajnumer()<0) b2 = szachownica.figury.find(-9)->second;
                         int pole2[2] = {3, pole[1]};
-                        poprzedni.ZapiszPoprzedni(kolej, b, b->podajpozycje(), b2, b2->podajpozycje());
+                        poprzedni.ZapiszPoprzedni(licznik, kolej, b, b->podajpozycje(), b2, b2->podajpozycje());
                         szachownica.przesun(b, pole);
                         szachownica.przesun(b2, pole2);
                         zmienkolej();
+                        licznik++;
+                        historia.push_back(Plansza(szachownica.plansza, kolej));
                         throw wyjatek;
                     }
                     else if(wyjatek=="roszada2")
@@ -114,16 +126,20 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                         if(b->podajnumer()>0) b2 = szachownica.figury.find(10)->second;
                         else if(b->podajnumer()<0) b2 = szachownica.figury.find(-10)->second;
                         int pole2[2] = {5, pole[1]};
-                        poprzedni.ZapiszPoprzedni(kolej, b, b->podajpozycje(), b2, b2->podajpozycje());
+                        poprzedni.ZapiszPoprzedni(licznik, kolej, b, b->podajpozycje(), b2, b2->podajpozycje());
                         szachownica.przesun(b, pole);
                         szachownica.przesun(b2, pole2);
                         zmienkolej();
+                        licznik++;
+                        historia.push_back(Plansza(szachownica.plansza, kolej));
                         throw wyjatek;
                     }
                     else if(wyjatek=="promocja")
                     {
                         poprzedni.Promocja();
                         zmienkolej();
+                        licznik = 0;
+                        historia.push_back(Plansza(szachownica.plansza, kolej));
                         throw wyjatek;
                     }
                 }
@@ -145,7 +161,7 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                     {
                         if(b->bij(&szachownica, pole)==0)
                         {
-                            if(b2->podajnumer()==16||b2->podajnumer()==-16) throw std::runtime_error("Szach, bicie króla");
+                            if(b2->podajnumer()==16||b2->podajnumer()==-16) return 1;
                             else
                             {
                                 szachownica.zbij(b2, true);
@@ -154,11 +170,13 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                                 {
                                     if(szachw()!=0)
                                     {
-                                        b2->cofnijzbij();
-                                        poprzedni.ZapiszPoprzedni(kolej, b, p1, b2, p2);
+                                        poprzedni.ZapiszPoprzedni(licznik, kolej, b, p1, b2, p2);
                                         szachownica.zbij(b2);
                                         szachownica.przesun(b, pole);
                                         zmienkolej();
+                                        licznik = 0;
+                                        historia.push_back(Plansza(szachownica.plansza, kolej));
+
                                         return 0;
                                     }
                                     else
@@ -173,11 +191,14 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                                 else
                                 {
                                     if(szachb()!=0)
-                                    {   b2->cofnijzbij();
-                                        poprzedni.ZapiszPoprzedni(kolej, b, p1, b2, p2);
+                                    {
+                                        poprzedni.ZapiszPoprzedni(licznik, kolej, b, p1, b2, p2);
                                         szachownica.zbij(b2);
                                         szachownica.przesun(b, pole);
                                         zmienkolej();
+                                        licznik  = 0;
+                                        historia.push_back(Plansza(szachownica.plansza, kolej));
+
                                         return 0;
                                     }
                                     else
@@ -203,6 +224,9 @@ int Rozgrywka::ruch(Bierka* b, int* pole)
                         {
                             poprzedni.Promocja();
                             zmienkolej();
+                            licznik = 0;
+                            historia.push_back(Plansza(szachownica.plansza, kolej));
+
                             throw wyjatek;
                         }
                     }
@@ -275,6 +299,7 @@ int Rozgrywka::cofnij()
         {
             poprzedni.PodajPoprzednia()->promotuj(1);
         }
+        historia.erase(historia.end());
         poprzedni.ZmienAktywny();
         zmienkolej();
     }
@@ -313,4 +338,161 @@ int Rozgrywka::szachb()
         it++;
     }
     return 1;
+}
+
+int Rozgrywka::mat()
+{
+    if(kolej=='b')
+    {
+        map<int, Bierka*> ::iterator it = szachownica.figury.find(-1);
+        Bierka* b;
+        Bierka* b2;
+        for(int k = 0; k<16; k++)
+        {
+            b = it->second;
+            if(!b->czyzbity())
+            {
+                for(int i = 0; i <8; i++)
+                {
+                    for(int j = 0; j<8; j++)
+                    {
+                        int pole[2] = {i, j};
+                        int bierka = szachownica.czywolne(pole);
+                        if(bierka==0) //puste, ruszamy
+                        {
+                            if(b->rusz(&szachownica, pole, true)==0)
+                            {
+                                szachownica.przesuntmp(b, pole);
+                                if(szachb()!=0)
+                                {
+                                    szachownica.cofnijtmp();
+                                    b->cofnijtmp();
+                                    return 1;  //jeżeli udało wykonać się ruch i nie ma szacha zwraczmy 1
+                                }
+                                else
+                                {
+                                    szachownica.cofnijtmp();
+                                    b->cofnijtmp();
+                                }
+                            }
+                        }
+                        else if(bierka>0) //przeciwnik bijemy
+                        {
+                            b2 = szachownica.figury.find(bierka)->second;
+                            if(b->bij(&szachownica, pole, true)==0)
+                            {
+                                szachownica.zbij(b2, true);
+                                szachownica.przesuntmp(b, pole);
+                                if(szachb()!=0)
+                                {
+                                    szachownica.cofnijtmp();
+                                    b->cofnijtmp();
+                                    b2->cofnijzbij();
+                                    return 1;  //jeżeli udało wykonać się ruch i nie ma szacha zwraczmy 1
+                                }
+                                else //jak nie to cofamy ruch i próbujemy dalej
+                                {
+                                    szachownica.cofnijtmp();
+                                    b->cofnijtmp();
+                                    b2->cofnijzbij();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        it--;
+        }
+        return 0;
+    }
+    else if(kolej=='w')
+    {
+        map<int, Bierka*> ::iterator it = szachownica.figury.find(1);
+        Bierka* b;
+        Bierka* b2;
+        for(int k = 0; k<16; k++)
+        {            
+            b = it->second;
+            if(!b->czyzbity())
+            {
+                for(int i = 0; i <8; i++)
+                {
+                    for(int j = 0; j<8; j++)
+                    {
+                        int pole[2] = {i, j};
+                        int bierka = szachownica.czywolne(pole);
+                        if(bierka==0) //puste, ruszamy
+                        {
+                            if(b->rusz(&szachownica, pole, true)==0)
+                            {
+                                szachownica.przesuntmp(b, pole);
+                                if(szachw()!=0)
+                                {
+                                    szachownica.cofnijtmp();
+                                    b->cofnijtmp();
+                                    return 1;  //jeżeli udało wykonać się ruch i nie ma szacha zwraczmy 1
+                                }
+                                else
+                                {
+                                    szachownica.cofnijtmp();
+                                    b->cofnijtmp();
+                                }
+                            }
+                        }
+                        else if(bierka<0) //przeciwnik bijemy
+                        {
+                            b2 = szachownica.figury.find(bierka)->second;
+                            if(b->bij(&szachownica, pole, true)==0)
+                            {
+                                szachownica.zbij(b2, true);
+                                szachownica.przesuntmp(b, pole);
+                                if(szachw()!=0)
+                                {
+                                    szachownica.cofnijtmp();
+                                    b->cofnijtmp();
+                                    b2->cofnijzbij();
+                                    return 1;  //jeżeli udało wykonać się ruch i nie ma szacha zwraczmy 1
+                                }
+                                else //jak nie to cofamy ruch i próbujemy dalej
+                                {
+                                    szachownica.cofnijtmp();
+                                    b->cofnijtmp();
+                                    b2->cofnijzbij();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            it++;
+        }
+    }
+    return 0;
+}
+
+int Rozgrywka::koniec_gry(char k)
+{
+    if(k=='w'||k=='b'||k=='r')
+    {
+        wygrana = k;
+        aktywna = false;
+        return 0;
+    }
+    else return 1;
+}
+
+int Rozgrywka::powtorzenia()
+{
+    int powt = 0;
+    int s = historia.size();
+    Plansza aktualny = historia.back();
+    if(s>0)
+    {
+        for(int i = 0; i<s; i++)
+        {
+            Plansza* sprawdzana = &historia[i];
+            if(aktualny.porownaj(sprawdzana)==0) powt++;
+        }
+    }
+    return powt;
 }

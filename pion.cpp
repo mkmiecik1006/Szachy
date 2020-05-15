@@ -6,7 +6,7 @@
 //#include  "szachownica.cpp"
 
 
-int Pion::rusz(Szachownica* s, int* poz, bool t)
+int Pion::rusz(Szachownica* s, int poz[2], bool t)
 {
     int x   = poz[0];               //pozycja na którą chcemy się ruszyć
     int y   = poz[1];
@@ -213,7 +213,7 @@ int Pion::zmienpozycje(int* pole)
     return 0;
 }
 
-int Pion::bij(Szachownica* s, int* poz, bool t)
+int Pion::bij(Szachownica* s, int poz[2], bool t)
 {
     int x   = poz[0];               //pozycja na którą chcemy się ruszyć
     int y   = poz[1];

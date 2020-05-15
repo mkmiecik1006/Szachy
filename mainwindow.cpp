@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    r= false;
     ui->setupUi(this);
 }
 
@@ -89,6 +90,10 @@ void MainWindow::on_Nowa_clicked()
     ui->lineEdit->setEnabled(true);
     ui->lineEdit_2->setEnabled(true);
     ui->Wyczysc->setEnabled(true);
+    ui->Czysc->setEnabled(true);
+    ui->Poddana->setEnabled(true);
+    ui->Remis->setEnabled(true);
+    ui->Reklamacja->setEnabled(false);
     ui->lbKolej->setText("Kolej: BIAŁE");
 }
 
@@ -167,6 +172,10 @@ void MainWindow::on_Wyczysc_clicked()
     ui->lineEdit_2->setEnabled(false);
     ui->lineEdit_2->clear();
     ui->Wyczysc->setEnabled(false);
+    ui->Czysc->setEnabled(false);
+    ui->Poddana->setEnabled(false);
+    ui->Remis->setEnabled(false);
+    ui->Reklamacja->setEnabled(false);
     ui->lbKolej->setText("Kolej:");
 }
 
@@ -192,9 +201,27 @@ void MainWindow::on_Ruch_clicked()
                     {
                         ZmienIkone(b, pozycja2);
                         ZmienIkone(0, pozycja1);
-                        if(rozgrywka.szach()==0) QMessageBox::about(this, "Szach", "król jest szachowany");
+                        /////////////////////////////////////////////////////////
+                        int s = rozgrywka.szach();
+                        int m = rozgrywka.mat(); //sprawdzamy czy mat
+                        if(m==0&&s==0)
+                        {
+                            rozgrywka.zmienkolej();
+                            koniec(rozgrywka.podajkolej());
+                            QMessageBox::about(this,"Koniec gry!", "Szach mat");
+                        }
+                        else if(m==0&&s!=0)
+                        {
+                            koniec('r');
+                            QMessageBox::about(this,"Koniec gry!", "Remis: PAT");
+                        }
+                        else if(s==0) QMessageBox::about(this, "Szach", "Król jest szachowany");
+                        remis();
+
+
                     }
                 }
+
 
             }
             catch(std::runtime_error &e)
@@ -215,7 +242,8 @@ void MainWindow::on_Ruch_clicked()
                     ZmienIkone(0, pozycja1);
                     ZmienIkone(b2, pozycja4);
                     ZmienIkone(0, pozycja3);
-                    if(rozgrywka.szach()==0) QMessageBox::about(this, "Szach", "król jest szachowany");
+                    remis();
+
 
                 }
                 else if(wyjatek=="roszada2")
@@ -230,7 +258,9 @@ void MainWindow::on_Ruch_clicked()
                     ZmienIkone(0, pozycja1);
                     ZmienIkone(b2, pozycja4);
                     ZmienIkone(0, pozycja3);
-                    if(rozgrywka.szach()==0) QMessageBox::about(this, "Szach", "król jest szachowany");
+                    if(r) //jeśli gracz zaproponował remis
+                    remis();
+
                 }
                 else if(wyjatek == "promocja")
                 {
@@ -241,9 +271,19 @@ void MainWindow::on_Ruch_clicked()
                     ZmienIkone(0, pozycja1);
                     ZmienIkone(b, pozycja2);
                     rozgrywka.poprzedni.Promocja();
+                    int s = rozgrywka.szach();
+                    int m = rozgrywka.mat(); //sprawdzamy czy mat
+                    if(m==0&&s==0) QMessageBox::about(this,"Koniec gry!", "Szach mat");
+                    else if(m==0&&s!=0) QMessageBox::about(this,"Koniec gry!", "Remis: PAT");
+                    else if(s==0) QMessageBox::about(this, "Szach", "król jest szachowany");
                     delete prom;
+                    if(r) //jeśli gracz zaproponował remis
+                    remis();
+
+
                 }
             }
+
         }
         else
         {
@@ -251,11 +291,13 @@ void MainWindow::on_Ruch_clicked()
         }
         if(rozgrywka.podajkolej()=='w') ui->lbKolej->setText("Kolej: BIAŁE");
         else if(rozgrywka.podajkolej()=='b') ui->lbKolej->setText("Kolej: CZARNE");
+
     }
     else QMessageBox::about(this, "Błąd", "Rozpocznij rozgrywkę!");
     ui->lineEdit->clear();
     ui->lineEdit_2->clear();
     if(rozgrywka.poprzedni.PodajAktywny()) ui->btnCofnij->setEnabled(true);
+
 }
 
 int MainWindow::OdczytajPozycje(QString txt, int* pozycja)
@@ -379,6 +421,13 @@ int MainWindow::ZmienIkone(int bierka, int* pozycja)
     else if(pozycja[0]==7 && pozycja[1]==7) ui->H8->setIcon(ikona);
     else throw std::runtime_error("Błędna pozycja/ Ikona");
     return 0;
+}
+
+
+void MainWindow::on_Czysc_clicked()
+{
+    ui->lineEdit->clear();
+    ui->lineEdit_2->clear();
 }
 
 void MainWindow::on_A1_clicked()
@@ -992,4 +1041,136 @@ void MainWindow::on_btnCofnij_clicked()
     if(!rozgrywka.poprzedni.PodajAktywny()) ui->btnCofnij->setEnabled(false);
     if(rozgrywka.podajkolej()=='w') ui->lbKolej->setText("Kolej: BIAŁE");
     else if(rozgrywka.podajkolej()=='b') ui->lbKolej->setText("Kolej: CZARNE");
+}
+
+
+
+void MainWindow::on_Poddana_clicked()
+{
+    QMessageBox msg;
+    msg.setText("Czy na pewno chcesz się poddać?");
+    msg.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
+    int ret = msg.exec();
+
+
+    switch (ret) {
+    case QMessageBox::Yes:
+        if(rozgrywka.podajkolej()=='w')
+        {
+            koniec('b');
+            QMessageBox::about(this,"Koniec gry!", "Koniec rozgrywki wygrały czarne!");
+            ui->Ruch->setEnabled(false);
+            ui->lineEdit->setEnabled(false);
+            ui->lineEdit->clear();
+            ui->lineEdit_2->setEnabled(false);
+            ui->lineEdit_2->clear();
+            ui->btnCofnij->setEnabled(false);
+            ui->Czysc->setEnabled(false);
+            ui->Poddana->setEnabled(false);
+            ui->Remis->setEnabled(false);
+            ui->lbKolej->setText("Kolej:");
+        }
+        else
+        {
+            koniec('w');
+            QMessageBox::about(this,"Koniec gry!", "Koniec rozgrywki wygrały białe!");
+            ui->Ruch->setEnabled(false);
+            ui->lineEdit->setEnabled(false);
+            ui->lineEdit->clear();
+            ui->lineEdit_2->setEnabled(false);
+            ui->lineEdit_2->clear();
+            ui->btnCofnij->setEnabled(false);
+            ui->Czysc->setEnabled(false);
+            ui->Poddana->setEnabled(false);
+            ui->Remis->setEnabled(false);
+            ui->lbKolej->setText("Kolej:");
+        }
+        break;
+    case QMessageBox::No:
+
+        break;
+    default:
+        break;
+    }
+}
+
+void MainWindow::koniec(char k)
+{
+    if(rozgrywka.koniec_gry(k)==0)
+    {
+        //zapisz
+        ui->Ruch->setEnabled(false);
+        ui->lineEdit->setEnabled(false);
+        ui->lineEdit->clear();
+        ui->lineEdit_2->setEnabled(false);
+        ui->lineEdit_2->clear();
+        ui->btnCofnij->setEnabled(false);
+        ui->Czysc->setEnabled(false);
+        ui->Poddana->setEnabled(false);
+        ui->Remis->setEnabled(false);
+        ui->lbKolej->setText("Kolej:");
+        ui->Reklamacja->setEnabled(false);
+    }
+}
+
+void MainWindow::on_Remis_clicked()
+{
+    r= true;
+    ui->Remis->setEnabled(false);
+}
+
+void MainWindow::remis()
+{
+    if(r)
+    {
+        QMessageBox msg;
+            msg.setText("Czy przyjmujesz remis?");
+            msg.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
+            int ret = msg.exec();
+            switch (ret)
+            {
+            case QMessageBox::Yes:
+                    koniec('r');
+                    r = false;
+                    QMessageBox::about(this,"Koniec gry!", "Remis!");
+
+                break;
+            case QMessageBox::No:
+                r= false;
+                ui->Remis->setEnabled(true);
+                break;
+            default:
+                break;
+            }
+    }
+    int powt = rozgrywka.powtorzenia();
+    if(rozgrywka.podajlicznik()>=50||powt>=3)
+    {
+        ui->Reklamacja->setEnabled(true);
+    }
+    else ui->Reklamacja->setEnabled(false);
+}
+
+void MainWindow::on_Reklamacja_clicked()
+{
+    QMessageBox msg;
+        msg.setText("Czy na pewno reklamujesz remis?");
+        msg.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
+        int ret = msg.exec();
+        switch (ret)
+        {
+        case QMessageBox::Yes:
+                koniec('r');
+                r = false;
+
+                QMessageBox::about(this,"Koniec gry!", "Remis!");
+
+            break;
+        case QMessageBox::No:
+            r= false;
+            ui->Remis->setEnabled(true);
+            break;
+        default:
+            break;
+        }
 }

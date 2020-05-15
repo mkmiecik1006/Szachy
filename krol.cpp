@@ -3,7 +3,7 @@
 #include "szachownica.h"
 #include <string>
 
-int Krol::rusz(Szachownica* s, int *poz, bool t)
+int Krol::rusz(Szachownica* s, int poz[2], bool t)
 {
     int x   = poz[0];               //pozycja na którą chcemy się ruszyć
     int y   = poz[1];
@@ -106,7 +106,7 @@ bool Krol::szach(int* pole, Szachownica* szachownica)
     return 1;
 }
 
-int Krol::bij(Szachownica* s, int* poz, bool t)
+int Krol::bij(Szachownica* s, int poz[2], bool t)
 {
 
     if(s->czywolne(poz))

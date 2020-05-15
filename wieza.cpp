@@ -2,7 +2,7 @@
 #include "bierka.h"
 #include "szachownica.h"
 
-int Wieza::rusz(Szachownica* s, int *poz, bool t)
+int Wieza::rusz(Szachownica* s, int poz[2], bool t)
 {
     int x   = poz[0];               //pozycja na którą chcemy się ruszyć
     int y   = poz[1];
@@ -63,7 +63,7 @@ int Wieza::rusz(Szachownica* s, int *poz, bool t)
 }
 
 
-int Wieza::bij(Szachownica* s, int* poz, bool t)
+int Wieza::bij(Szachownica* s, int poz[2], bool t)
 {
     int x   = poz[0];               //pozycja na którą chcemy się ruszyć
     int y   = poz[1];

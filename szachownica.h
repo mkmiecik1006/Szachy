@@ -30,6 +30,8 @@ public:
         }
     }
 
+
+
     ~Szachownica()
     {
         wyczysc();
@@ -37,9 +39,9 @@ public:
 
 
     int     wyczysc();
-    int     przesun(Bierka*, int*);
-    int     przesuntmp(Bierka*, int*);
-    int     czywolne(int* t, bool t2 =false)
+    int     przesun(Bierka*, int [2]);
+    int     przesuntmp(Bierka*, int [2]);
+    int     czywolne(int t[2], bool t2 =false)
     {
         if(!t2)    return plansza[t[0]] [t[1]];//zwraca wartość bierki na danym polu
         else        return tmp[t[0]] [t[1]];
@@ -55,7 +57,7 @@ public:
     int     zbij(Bierka* b, bool t= false)
     {
         int* pole = b->podajpozycje();
-        if(t)   plansza[pole[0]][pole[1]] = 0;
+        if(!t)   plansza[pole[0]][pole[1]] = 0;
         else    tmp[pole[0]][pole[1]] = 0;
         b->zbij();
         return 0;

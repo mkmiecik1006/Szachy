@@ -2,7 +2,7 @@
 #include "bierka.h"
 #include "szachownica.h"
 
-int Hetman::rusz(Szachownica* s, int *poz, bool t)
+int Hetman::rusz(Szachownica* s, int poz[2], bool t)
 {
     int x   = poz[0];               //pozycja na którą chcemy się ruszyć
     int y   = poz[1];
@@ -78,7 +78,7 @@ int Hetman::rusz(Szachownica* s, int *poz, bool t)
 }
 
 
-int Hetman::bij(Szachownica* s, int* poz, bool t)
+int Hetman::bij(Szachownica* s, int poz[2], bool t)
 {
     int x   = poz[0];               //pozycja na którą chcemy się ruszyć
     int y   = poz[1];

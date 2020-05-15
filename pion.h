@@ -25,9 +25,11 @@ public:
         zbity = false;
         pierwszy = false;
         promocja = 1;
+        if(n>0) rysuj =  1;
+        else    rysuj = -1;
     }
-    int rusz(Szachownica* s, int* pole, bool t = false);
-    int bij(Szachownica* s, int* pole, bool t = false);
+    int rusz(Szachownica* s, int pole[2], bool t = false);
+    int bij(Szachownica* s, int pole[2], bool t = false);
     int zmienpozycje(int *pole);
 
 

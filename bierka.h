@@ -40,9 +40,9 @@ public:
         rysuj = n;
         pierwszy = false;
     }
-    int virtual rusz(Szachownica* s, int* pole, bool t = false)  =0;
+    int virtual rusz(Szachownica* s, int pole[2], bool t = false)  =0;
 
-    int virtual bij(Szachownica* s, int* pole, bool t = false)  =0;
+    int virtual bij(Szachownica* s, int pole[2], bool t = false)  =0;
 
     char podajkolor(){return kolor;}
 

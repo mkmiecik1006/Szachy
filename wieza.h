@@ -12,8 +12,8 @@ public:
         zbity = false;
         pierwszy = false;
     }
-    int rusz(Szachownica* s, int* poz, bool t = false);
-    int bij(Szachownica* s, int* pole, bool t = false);
+    int rusz(Szachownica* s, int poz[2], bool t = false);
+    int bij(Szachownica* s, int pole[2], bool t = false);
     bool czypierwszy()
     {
         return pierwszy;
