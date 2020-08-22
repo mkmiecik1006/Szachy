@@ -61,7 +61,7 @@ int Krol::rusz(Szachownica* s, int poz[2], bool t)
                     int p2[2] = {6, y};
                     if(s->czywolne(p1)==0&&s->czywolne(p2)==0) //czy pola miedzy krolem a wieza są wolne
                     {
-                        if((szach(pozycja, s)!=0&& szach(p1, s))!=0&&szach(p2, s)!=0) //król i pola przez które przejdzie nie są szachowane
+                        if(szach(pozycja, s)!=0&& szach(p02, s)!=0&&szach(p2, s)!=0) //król i pola przez które przejdzie nie są szachowane
                         {
                             std::string wyjatek = "roszada2";
                             throw wyjatek;

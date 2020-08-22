@@ -16,8 +16,11 @@ int Bierka::cofnijzbij()
     return 0;
 }
 
-int Bierka::zmientmp(int x[2])
+int Bierka::virtual zmienpozycje(int* x)
 {
+    pierwszy = true;
+    pozycja[0]=x[0];
+    pozycja[1]=x[1];
     tmp[0]=x[0];
     tmp[1]=x[1];
     return 0;
