@@ -2,76 +2,122 @@
 #include "bierka.h"
 #include "szachownica.h"
 
-int Wieza::rusz(Szachownica s, int *poz)
+int Wieza::rusz(Szachownica* s, int poz[2], bool t)
 {
-    int x   = poz[0];               //jeżeli zajęte poda numer bierki
+    int x   = poz[0];               //pozycja na którą chcemy się ruszyć
     int y   = poz[1];
-    bool bicie = false;
-    int bierka = s.czywolne(poz);
-    if(x>=0&&y>=0&&x<8&&y<8) //jesteśmy wewnątrz planszy
+    int x2;                         //pozycja na której obecnie jestesmy
+    int y2;
+    if(t)
     {
-        if(x!=pozycja[0]&&y!=pozycja[1]) //ruszamy się gdzieś
+        x2 = tmp[0];
+        y2 = tmp[1];
+    }
+    else
+    {
+        x2 = pozycja[0];
+        y2 = pozycja[1];
+    }
+
+    if(zbity==false)
+    {
+        if(x!=x2||y!=y2) //ruszamy się gdzieś
         {
-            if(bierka!=0)
+            int rx = x-x2;      //odległość od aktualnej pozycji
+            int ry = y-y2;
+            int kx = 0; //krok dla x
+            int ky = 0; //krok dla y
+            int z = 0;
+            int krok[2] = {x2, y2};
+            if(x2==x||y2==y)    //ruch po prostych
             {
-
-                Bierka* b = &(s.figury.find(bierka)->second); //znadujemy bierkę o numerze na pozycji
-                if(kolor != b->podajkolor())  bicie = true;
-                else bicie = false;
-
-            }
-            if(bierka==0||bicie) //bicie dozwolone, rózny kolor
-            {
-                int rx = x-pozycja[0];      //odległość od aktualnej pozycji
-                int ry = y-pozycja[1];
-                int kx = 0; //krok dla x
-                int ky = 0; //krok dla y
-                int z = 0;
-                int krok[2] = {pozycja[0], pozycja[1]};
-                if(pozycja[0]==x||pozycja[1]==y)    //ruch po prostych
+                if(rx!=0)
                 {
-                    if(rx!=0)
+                    z = abs(rx);
+                    if(rx>0)   kx=1;      //krok dla x
+                    else     kx =-1;     //krok dla y
+                }
+                else if(ry!=0)
+                {
+                    z = abs(ry);
+                    if(ry>0)  ky=1;
+                    else     ky =-1;
+                }
+                for(int i = 0; i <z; i++)
+                {
+                    krok[0] +=kx;
+                    krok[1] +=ky;
+                    if(i==z-1)  //ostatnie pole
                     {
-                        z = abs(rx);
-                        if(rx>0)   kx=1;      //krok dla x
-                        else     kx =-1;     //krok dla y
+                        return 0;
                     }
-                    else if(ry!=0)
+                    else if(s->czywolne(krok, t)!=0)    //czy pola po drodze są wolne
                     {
-                        z = abs(ry);
-                        if(ry>0)  ky=1;
-                        else     ky =-1;
-                    }
-                    for(int i = 0; i <z; i++)
-                    {
-                        krok[0] +=kx;
-                        krok[1] +=ky;
-                        if(i==abs(rx))  //ostatnie pole
-                        {
-                            int bierka = s.czywolne(krok);
-                            if(bierka==0)
-                            {
-                                return 0;   //ruch dozwolony
-                            }
-                            else //bicie
-                            {
-                                Bierka* b = &(s.figury.find(bierka)->second); //znadujemy bierkę o numerze na pozycji
-                                if(kolor != b->podajkolor())
-                                {
-                                    return 0;
-                                }
-                            }
-                        }
-                        else if(s.czywolne(krok)!=0)    //czy pola po drodze są wolne
-                        {
-                            return 1;
-                        }
-
+                        return 1;
                     }
                 }
-
             }
+        }
+    }
+    return 1;
+}
 
+
+int Wieza::bij(Szachownica* s, int poz[2], bool t)
+{
+    int x   = poz[0];               //pozycja na którą chcemy się ruszyć
+    int y   = poz[1];
+    int x2;                         //pozycja na której obecnie jestesmy
+    int y2;
+    if(t)
+    {
+        x2 = tmp[0];
+        y2 = tmp[1];
+    }
+    else
+    {
+        x2 = pozycja[0];
+        y2 = pozycja[1];
+    }
+
+    if(zbity==false)
+    {
+        if(x!=x2||y!=y2) //ruszamy się gdzieś
+        {
+            int rx = x-x2;      //odległość od aktualnej pozycji
+            int ry = y-y2;
+            int kx = 0; //krok dla x
+            int ky = 0; //krok dla y
+            int z = 0;
+            int krok[2] = {x2, y2};
+            if(x2==x||y2==y)    //ruch po prostych
+            {
+                if(rx!=0)
+                {
+                    z = abs(rx);
+                    if(rx>0)   kx=1;      //krok dla x
+                    else     kx =-1;     //krok dla y
+                }
+                else if(ry!=0)
+                {
+                    z = abs(ry);
+                    if(ry>0)  ky=1;
+                    else     ky =-1;
+                }
+                for(int i = 0; i <z; i++)
+                {
+                    krok[0] +=kx;
+                    krok[1] +=ky;
+                    if(i==z-1)  //ostatnie pole
+                    {
+                        return 0;
+                    }
+                    else if(s->czywolne(krok, t)!=0)    //czy pola po drodze są wolne
+                    {
+                        return 1;
+                    }
+                }
+            }
         }
     }
     return 1;

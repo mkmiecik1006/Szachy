@@ -6,13 +6,13 @@
 class Kon : public Bierka
 {
 public:
-    Kon(char k, int n):Bierka(k, n)
+    Kon(char k, int n, int x, int y) :Bierka(k, n, x, y)
     {
         zbity = false;
-        pozycja[0] = -1;
-        pozycja[-1] = -1;
+
     }
-    int rusz(Szachownica s, int* poz);
+    int rusz(Szachownica* s, int poz[2], bool t = false);
+    int bij(Szachownica* s, int pole[2], bool t = false);
 };
 
 #endif // KON_H

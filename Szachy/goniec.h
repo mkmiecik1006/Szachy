@@ -8,13 +8,13 @@ class Goniec : public Bierka
 {
 public:
 
-    Goniec(char k, int n) :Bierka(k, n)
+    Goniec(char k, int n, int x, int y) :Bierka(k, n, x, y)
     {
         zbity = false;
-        pozycja[0] = -1;
-        pozycja[-1] = -1;
+
     }
-    int rusz(Szachownica s, int* poz);
+    int rusz(Szachownica* s, int pole[2], bool t = false);
+    int bij(Szachownica* s, int pole[2], bool t = false);
 };
 
 #endif // GONIEC_H

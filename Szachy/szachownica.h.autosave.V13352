@@ -41,20 +41,20 @@ public:
     int     wyczysc(); //czyszenie planszy po skonczonej rozgrywce
     int     przesun(Bierka*, int [2]); //zmiana pozycji bierki na planszy
     int     przesuntmp(Bierka*, int [2]); //zmiana pozycji bierki na planszy tymczasowej
-    int     czywolne(int t[2], bool t2 =false) //metoda zwraca numer bierki znajdujacej sie na wskazanym polu, jak t2=true naplanszy tyczasowej
+    int     czywolne(int t[2], bool t2 =false) //
     {
         if(!t2)    return plansza[t[0]] [t[1]];//zwraca wartość bierki na danym polu
         else        return tmp[t[0]] [t[1]];
     }
-    void cofnijtmp(); //metoda przepisuje ustawienie z planszy wlasciwej do tymczasowej
-    int     ustaw();    //metoda ustawia bierki na planszy na poczatku rozgrywki
-    char    kolor(int n) // metoda podajaca kolor bierki o podanym numerze
+    void cofnijtmp();
+    int     ustaw();
+    char    kolor(int n)
     {
 
         Bierka* b = figury.find(n)->second;
         return b->podajkolor();
     }
-    int     zbij(Bierka* b, bool t= false)  // metoda zbijajaca podana bierke na planszy wlasciwej lub tymczasowej
+    int     zbij(Bierka* b, bool t= false)
     {
         int* pole = b->podajpozycje();
         if(!t)   plansza[pole[0]][pole[1]] = 0;
@@ -65,7 +65,7 @@ public:
 
     }//zbija bierkę o danym numerze
 
-    Bierka* znajdz(int pole[2]); // metodna znajdujaca bierka na planszy
+    Bierka* znajdz(int* pole);
 
 };
 #endif // SZACHOWNICA_H

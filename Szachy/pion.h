@@ -2,36 +2,33 @@
 #define PION_H
 #include "bierka.h"
 #include <iostream>
-#include "szachownica.h"
+#include "stdlib.h"
+//#include "szachownica.h"
 
+class Szachownica;
 
 
 class Pion : public Bierka
 {
-    bool    pierwszy;   //czy wykonano pierwszy ruch
+    int promocja;
 
 public:
 
-    ~Pion()
+
+    Pion(char k, int n, int x, int y) :Bierka(k, n, x, y)
     {
-      // cout<<"destruktor"<<endl;
-    }
-    Pion(char k, int n) :Bierka(k, n){
-        //cout<<"konstruktor"<<kolor<<numer<<endl;
-        pozycja[0] = -1;
-        pozycja[-1] = -1;
         zbity = false;
         pierwszy = false;
+        promocja = 1;
+        if(n>0) rysuj =  1;
+        else    rysuj = -1;
     }
-    int rusz(Szachownica s, int* poz);
-
-    int promotuj()
-    {
-        return 0;
-    }
-
-
+    int rusz(Szachownica* s, int pole[2], bool t = false);
+    int bij(Szachownica* s, int pole[2], bool t = false);
+    int zmienpozycje(int *pole); //tak jak w klasie bazowej, ale dodatkowo obsluga promocji
+    int promotuj(int p);    //metoda promocji piona po dotarciu na przeciwlegly koniec planszy
 
 };
 
 #endif // PION_H
+
