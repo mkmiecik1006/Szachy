@@ -33,8 +33,8 @@ int Krol::rusz(Szachownica* s, int poz[2], bool t)
             else if(pierwszy==false && x==2 && y2==y)       //roszada
             {
                 Bierka* b;
-                if(numer>0) b = s->figury.find(9)->second;
-                else b = s->figury.find(-9)->second;
+                if(numer>0) b = s->znajdz(9);
+                        else b = s->znajdz(-9);
                 if(b->czypierwszy()==false)
                 {
                     int p1[2] = {1, y};
@@ -53,8 +53,8 @@ int Krol::rusz(Szachownica* s, int poz[2], bool t)
             else if(pierwszy== false && x==6&& pozycja[1]==y)
             {
                 Bierka* b;
-                if(numer>0) b = s->figury.find(10)->second;
-                else b = s->figury.find(-10)->second;
+                if(numer>0) b = s->znajdz(10);
+                else b = s->znajdz(-10);
                 if(b->czypierwszy()==false)
                 {
                     int p1[2] = {5, y};
@@ -77,9 +77,9 @@ int Krol::rusz(Szachownica* s, int poz[2], bool t)
 
 }
 
-bool Krol::szach(int* pole, Szachownica* szachownica)
+bool Krol::szach(int pole[2], Szachownica* szachownica)
 {
-    map<int, Bierka*> ::iterator it = szachownica->figury.find(-16);
+    map<int, Bierka*> ::iterator it = szachownica->znajdz2(-16);
     if(numer>0)
     {
         for(int i =0; i<16; i++)
@@ -93,7 +93,7 @@ bool Krol::szach(int* pole, Szachownica* szachownica)
     }
     else
     {
-        it = szachownica->figury.find(1);
+        it = szachownica->znajdz2(1);
         for(int i =0; i<16; i++)
         {
             if(it->second->bij(szachownica, pole)==0)   //sprawdzamy czy któraś z bierek przeciwnika atakuje króla

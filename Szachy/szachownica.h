@@ -10,14 +10,14 @@ using namespace std;
 
 class Szachownica
 {
-private:
+private:    map <int, Bierka*> figury;  // kontener przechowujacy wskazniki do bierek na danej planszy
+
 public:
+
     int     plansza[8][8]; //tablica 8x8 odwzorowujaca szachownice, przechowuje numery bierek
 
     int     tmp[8][8];      //tablica tymczaasowa wykorzystywana do sprawdzania poprawnosci ruchow
 
-    map <int, Bierka*> figury;  // kontener przechowujacy wskazniki do bierek na danej planszy
-public:
     Szachownica()
     {
         for(int i = 0; i<8;i++)
@@ -37,7 +37,7 @@ public:
         wyczysc();
     }
 
-
+    //int    podajplansza(){return plansza;}
     int     wyczysc(); //czyszenie planszy po skonczonej rozgrywce
     int     przesun(Bierka*, int [2]); //zmiana pozycji bierki na planszy
     int     przesuntmp(Bierka*, int [2]); //zmiana pozycji bierki na planszy tymczasowej
@@ -46,7 +46,7 @@ public:
         if(!t2)    return plansza[t[0]] [t[1]];//zwraca wartość bierki na danym polu
         else        return tmp[t[0]] [t[1]];
     }
-    void cofnijtmp(); //metoda przepisuje ustawienie z planszy wlasciwej do tymczasowej
+    void    cofnijtmp(); //metoda przepisuje ustawienie z planszy wlasciwej do tymczasowej
     int     ustaw();    //metoda ustawia bierki na planszy na poczatku rozgrywki
     char    kolor(int n) // metoda podajaca kolor bierki o podanym numerze
     {
@@ -66,6 +66,7 @@ public:
     }//zbija bierkę o danym numerze
 
     Bierka* znajdz(int pole[2]); // metodna znajdujaca bierka na planszy
-
+    Bierka* znajdz(int n);
+    map <int, Bierka*>::iterator znajdz2(int n);
 };
 #endif // SZACHOWNICA_H

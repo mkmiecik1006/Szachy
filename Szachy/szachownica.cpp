@@ -94,6 +94,16 @@ Bierka* Szachownica::znajdz(int pole[2])
     else throw std::runtime_error("Pole poza planszą!");
 }
 
+
+Bierka* Szachownica::znajdz(int n)
+{
+    return figury.find(n)->second;
+}
+
+ map <int, Bierka*>::iterator Szachownica::znajdz2(int n)
+{
+    return figury.find(n);
+}
 int Szachownica::ustaw()
 {
     wyczysc();      //ustaw wszystkie wartości na 0

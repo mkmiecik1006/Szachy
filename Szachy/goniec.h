@@ -11,7 +11,6 @@ public:
     Goniec(char k, int n, int x, int y) :Bierka(k, n, x, y)
     {
         zbity = false;
-
     }
     int rusz(Szachownica* s, int pole[2], bool t = false);
     int bij(Szachownica* s, int pole[2], bool t = false);

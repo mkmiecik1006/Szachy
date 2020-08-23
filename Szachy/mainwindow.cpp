@@ -264,8 +264,8 @@ void MainWindow::on_Ruch_clicked()
                 if(wyjatek=="roszada1")
                 {
                     Bierka* bierka2;
-                    if(bierka->podajnumer()>0) bierka2 = rozgrywka.szachownica.figury.find(9)->second;
-                    else if(bierka->podajnumer()<0) bierka2 = rozgrywka.szachownica.figury.find(-9)->second;
+                    if(bierka->podajnumer()>0) bierka2 = rozgrywka.szachownica.znajdz(9);
+                    else if(bierka->podajnumer()<0) bierka2 = rozgrywka.szachownica.znajdz(-9);
                     int b2 = bierka2->narysuj();
                     int pozycja3[2] = {0, pozycja1[1]};
                     int pozycja4[2] = {3, pozycja1[1]};
@@ -280,8 +280,8 @@ void MainWindow::on_Ruch_clicked()
                 else if(wyjatek=="roszada2")
                 {
                     Bierka* bierka2;
-                    if(bierka->podajnumer()>0) bierka2 = rozgrywka.szachownica.figury.find(10)->second;
-                    else if(bierka->podajnumer()<0) bierka2 = rozgrywka.szachownica.figury.find(-10)->second;
+                    if(bierka->podajnumer()>0) bierka2 = rozgrywka.szachownica.znajdz(10);
+                    else if(bierka->podajnumer()<0) bierka2 = rozgrywka.szachownica.znajdz(-10);
                     int b2 = bierka2->narysuj();
                     int pozycja3[2] = {7, pozycja1[1]};
                     int pozycja4[2] = {5, pozycja1[1]};
