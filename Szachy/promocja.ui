@@ -27,7 +27,7 @@
    </property>
    <property name="icon">
     <iconset resource="figury.qrc">
-     <normaloff>:/new/ww.png</normaloff>:/new/ww.png</iconset>
+     <normaloff>:/new/prefix1/Pliki/ww.png</normaloff>:/new/prefix1/Pliki/ww.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -50,7 +50,7 @@
    </property>
    <property name="icon">
     <iconset resource="figury.qrc">
-     <normaloff>:/new/kw.png</normaloff>:/new/kw.png</iconset>
+     <normaloff>:/new/prefix1/Pliki/kw.png</normaloff>:/new/prefix1/Pliki/kw.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -73,7 +73,7 @@
    </property>
    <property name="icon">
     <iconset resource="figury.qrc">
-     <normaloff>:/new/gw.png</normaloff>:/new/gw.png</iconset>
+     <normaloff>:/new/prefix1/Pliki/gw.png</normaloff>:/new/prefix1/Pliki/gw.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -96,7 +96,7 @@
    </property>
    <property name="icon">
     <iconset resource="figury.qrc">
-     <normaloff>:/new/hw.png</normaloff>:/new/hw.png</iconset>
+     <normaloff>:/new/prefix1/Pliki/hw.png</normaloff>:/new/prefix1/Pliki/hw.png</iconset>
    </property>
    <property name="iconSize">
     <size>

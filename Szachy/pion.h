@@ -25,7 +25,7 @@ public:
     }
     int rusz(Szachownica* s, int pole[2], bool t = false);
     int bij(Szachownica* s, int pole[2], bool t = false);
-    int zmienpozycje(int *pole); //tak jak w klasie bazowej, ale dodatkowo obsluga promocji
+    int zmienpozycje(int pole[2]); //tak jak w klasie bazowej, ale dodatkowo obsluga promocji
     int promotuj(int p);    //metoda promocji piona po dotarciu na przeciwlegly koniec planszy
 
 };

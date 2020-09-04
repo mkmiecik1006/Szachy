@@ -14,20 +14,33 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    int ZmienIkone(int bierka, int* pozycja);       //metoda zmieniajaca pozycje bierki na wyswietlanej planszy
+    int ZmienIkone(int bierka, int pozycja[2]);       //metoda zmieniajaca pozycje bierki na wyswietlanej planszy
     int OdczytajPozycje(QString txt, int pozycja[2]); //metoda konwerujaca podana nazwe pola np 'A1' na tablice w tym przypadku {0, 0}
     void koniec(char k);        //metoda czyszczaca plansze po zakonczonej grze
     void remis();               //metoda obslugujaca propozyjcje remisu graczy
 private slots:
-    void on_A1_clicked();
-
-    void on_A8_clicked();
 
     void on_Nowa_clicked();
 
     void on_Wyczysc_clicked();
 
     void on_Ruch_clicked();
+
+    void on_btnCofnij_clicked();
+
+    void on_Czysc_clicked();
+
+    void on_Poddana_clicked();
+
+    void on_Remis_clicked();
+
+    void on_Reklamacja_clicked();
+
+
+
+    void on_A1_clicked();
+
+    void on_A8_clicked();
 
     void on_B1_clicked();
 
@@ -152,16 +165,6 @@ private slots:
     void on_G8_clicked();
 
     void on_H8_clicked();
-
-    void on_btnCofnij_clicked();
-
-    void on_Czysc_clicked();
-
-    void on_Poddana_clicked();
-
-    void on_Remis_clicked();
-
-    void on_Reklamacja_clicked();
 
 private:
     Ui::MainWindow *ui;

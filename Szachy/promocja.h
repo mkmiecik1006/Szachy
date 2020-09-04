@@ -11,8 +11,9 @@ class Promocja; //klasa obslugujaca wyswietlanie wybor figury na jaka zostal pro
 class Promocja : public QDialog
 {
     Q_OBJECT
-
+private:
     Bierka* bierka;
+
 public:
     explicit Promocja(Bierka* b, QWidget *parent = 0);
     ~Promocja();

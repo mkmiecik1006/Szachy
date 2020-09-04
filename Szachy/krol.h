@@ -14,7 +14,7 @@ public:
     }
     int rusz(Szachownica* s, int poz[2], bool t = false);
     int bij(Szachownica* s, int pole[2], bool t = false);
-    bool szach(int* pole, Szachownica* szachownica);  //metoda sprawdzajaca czy w na danej pozycju krol znajduje sie pod szachem
+    bool szach(int pole[2], Szachownica* szachownica);  //metoda sprawdzajaca czy w na danej pozycju krol znajduje sie pod szachem
 };
 
 #endif // KROL_H

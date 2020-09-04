@@ -1,5 +1,7 @@
 #ifndef ROZGRYWKA_H
 #define ROZGRYWKA_H
+#include <fstream>
+#include <iostream>
 #include "bierka.h"
 #include "szachownica.h"
 #include <stdlib.h>
@@ -10,17 +12,20 @@
 
 class Rozgrywka
 {
-
+    friend class MainWindow;
+private:
     char    kolej;         //flaga kolejności gracza w- white, b- black
     bool    aktywna;       //flaga rozpoczętej rozgrywki
     int     licznik;        //licznik 50 ruchów bez bicia lub ruchu pionem
     std::vector<Plansza> historia;    //historia ruchów w danej partii
     char    wygrana;
-    //int     poworzenia;
-public:
-    Rozgrywka();
+
+protected:
     Szachownica szachownica;
     PoprzedniRuch poprzedni;
+public:
+    Rozgrywka();
+
     int nowa();         //rozpoczęcie nowej partii
     int zakoncz();      //zakończenie aktualniej partii
     int ruch(Bierka* b, int pole[2]);     //wykonanie ruchu bierka b na pole

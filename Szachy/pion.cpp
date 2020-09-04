@@ -198,7 +198,7 @@ int Pion::promotuj(int p)
     else rysuj = -p;
     return 0;
 }
-int Pion::zmienpozycje(int* pole)
+int Pion::zmienpozycje(int pole[2])
 {
     pozycja[0]=pole[0];
     pozycja[1]=pole[1];

@@ -17,7 +17,7 @@ PoprzedniRuch::PoprzedniRuch()
     pierwszybity = true;
 }
 
-int PoprzedniRuch::ZapiszPoprzedni(int l, char k, Bierka *b, int * p, Bierka* bb, int* pb)
+int PoprzedniRuch::ZapiszPoprzedni(int l, char k, Bierka *b, int  p[2], Bierka* bb, int* pb)
 {
 
     kolej = k;

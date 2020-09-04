@@ -3,11 +3,12 @@
 
 class Plansza  //klasa zawierajaca podstawowe informacje zapisywane w historii ruchow, do gry wykozystywana jest klasa szachownica
 {
-public:
+    friend class Rozgrywka;
+protected:
     int     plansza[8][8];      //tablica 8x8 odwzorowujaca szachownice, przechowuje numery bierek
     char    kolej;              //pole przechowuje informacje o tym ktory gracz ma ruch, b/w
-public:
 
+public:
     Plansza()
     {
         for(int i = 0; i<8;i++) //na poczatku plansza jest pusta

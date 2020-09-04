@@ -1,16 +1,19 @@
 <RCC>
-    <qresource prefix="/new">
-        <file>gb.png</file>
-        <file>gw.png</file>
-        <file>hb.png</file>
-        <file>hw.png</file>
-        <file>k2b.png</file>
-        <file>k2w.png</file>
-        <file>kb.png</file>
-        <file>krb.png</file>
-        <file>krw.png</file>
-        <file>kw.png</file>
-        <file>wb.png</file>
-        <file>ww.png</file>
+    <qresource prefix="/new/prefix1">
+        <file>Pliki/gb.png</file>
+        <file>Pliki/gw.png</file>
+        <file>Pliki/hb.png</file>
+        <file>Pliki/hw.png</file>
+        <file>Pliki/k2b.png</file>
+        <file>Pliki/k2w.png</file>
+        <file>Pliki/kb.png</file>
+        <file>Pliki/krb.png</file>
+        <file>Pliki/krw.png</file>
+        <file>Pliki/kw.png</file>
+        <file>Pliki/pb.png</file>
+        <file>Pliki/puste.png</file>
+        <file>Pliki/pw.png</file>
+        <file>Pliki/wb.png</file>
+        <file>Pliki/ww.png</file>
     </qresource>
 </RCC>

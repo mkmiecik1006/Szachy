@@ -109,8 +109,8 @@ int Rozgrywka::ruch(Bierka* b, int pole[2])
                     if(wyjatek=="roszada1")
                     {
                         Bierka* b2;
-                        if(b->podajnumer()>0) b2 = szachownica.figury.find(9)->second;
-                        else if(b->podajnumer()<0) b2 = szachownica.figury.find(-9)->second;
+                        if(b->podajnumer()>0) b2 = szachownica.znajdz(9);
+                        else if(b->podajnumer()<0) b2 = szachownica.znajdz(-9);
                         int pole2[2] = {3, pole[1]};
                         poprzedni.ZapiszPoprzedni(licznik, kolej, b, b->podajpozycje(), b2, b2->podajpozycje());
                         szachownica.przesun(b, pole);
@@ -123,8 +123,8 @@ int Rozgrywka::ruch(Bierka* b, int pole[2])
                     else if(wyjatek=="roszada2")
                     {
                         Bierka* b2;
-                        if(b->podajnumer()>0) b2 = szachownica.figury.find(10)->second;
-                        else if(b->podajnumer()<0) b2 = szachownica.figury.find(-10)->second;
+                        if(b->podajnumer()>0) b2 = szachownica.znajdz(10);
+                        else if(b->podajnumer()<0) b2 = szachownica.znajdz(-10);
                         int pole2[2] = {5, pole[1]};
                         poprzedni.ZapiszPoprzedni(licznik, kolej, b, b->podajpozycje(), b2, b2->podajpozycje());
                         szachownica.przesun(b, pole);
@@ -148,7 +148,7 @@ int Rozgrywka::ruch(Bierka* b, int pole[2])
             else      //bicie
             {
                 int bierka2 = szachownica.czywolne(pole);
-                Bierka* b2 = szachownica.figury.find(bierka2)->second;
+                Bierka* b2 = szachownica.znajdz(bierka2);
                 int p1[2];
                 int p2[2];
                 p1[0] = b->podajpozycje()[0];
@@ -248,12 +248,12 @@ int Rozgrywka::ruch(Bierka* b, int pole[2])
 int Rozgrywka::szach()
 {
     Bierka* kw; //krol bialy
-    kw = szachownica.figury.find(16)->second;
+    kw = szachownica.znajdz(16);
     int* pw = kw->podajpozycje();
     Bierka* kb; //krol czarny
-    kb = szachownica.figury.find(-16)->second;
+    kb = szachownica.znajdz(-16);
     int* pb = kb->podajpozycje();
-    map<int, Bierka*> ::iterator it = szachownica.figury.find(-16);
+    map<int, Bierka*> ::iterator it = szachownica.znajdz2(-16);
     for(int i =0; i<16; i++)
     {
         if(it->second->bij(&szachownica, pw)==0)   //sprawdzamy czy któraś z bierek przeciwnika atakuje króla
@@ -262,7 +262,7 @@ int Rozgrywka::szach()
         }
         it++;
     }
-    it = szachownica.figury.find(1);
+    it = szachownica.znajdz2(1);
     for(int i =0; i<16; i++)
     {
         if(it->second->bij(&szachownica, pb)==0)   //sprawdzamy czy któraś z bierek przeciwnika atakuje króla
@@ -309,9 +309,9 @@ int Rozgrywka::cofnij()
 int Rozgrywka::szachw()
 {
     Bierka* kw; //krol bialy
-    kw = szachownica.figury.find(16)->second;
+    kw = szachownica.znajdz(16);
     int* pw = kw->podajtmp();
-    map<int, Bierka*> ::iterator it = szachownica.figury.find(-16);
+    map<int, Bierka*> ::iterator it = szachownica.znajdz2(-16);
     for(int i =0; i<16; i++)
     {
         if(it->second->bij(&szachownica, pw, true)==0)   //sprawdzamy czy któraś z bierek przeciwnika atakuje króla
@@ -326,9 +326,9 @@ int Rozgrywka::szachw()
 int Rozgrywka::szachb()
 {
     Bierka* kb; //krol bialy
-    kb = szachownica.figury.find(-16)->second;
+    kb = szachownica.znajdz(-16);
     int* pb = kb->podajtmp();
-    map<int, Bierka*> ::iterator it = szachownica.figury.find(1);
+    map<int, Bierka*> ::iterator it = szachownica.znajdz2(1);
     for(int i = 0; i<16; i++)
     {
         if(it->second->bij(&szachownica, pb, true)==0)    //sprawdzamy czy któraś z bierek przeciwnika atakuje króla
@@ -344,7 +344,7 @@ int Rozgrywka::mat()
 {
     if(kolej=='b')
     {
-        map<int, Bierka*> ::iterator it = szachownica.figury.find(-1);
+        map<int, Bierka*> ::iterator it = szachownica.znajdz2(1);
         Bierka* b;
         Bierka* b2;
         for(int k = 0; k<16; k++)
@@ -378,7 +378,7 @@ int Rozgrywka::mat()
                         }
                         else if(bierka>0) //przeciwnik bijemy
                         {
-                            b2 = szachownica.figury.find(bierka)->second;
+                            b2 = szachownica.znajdz(bierka);
                             if(b->bij(&szachownica, pole, true)==0)
                             {
                                 szachownica.zbij(b2, true);
@@ -407,7 +407,7 @@ int Rozgrywka::mat()
     }
     else if(kolej=='w')
     {
-        map<int, Bierka*> ::iterator it = szachownica.figury.find(1);
+        map<int, Bierka*> ::iterator it = szachownica.znajdz2(1);
         Bierka* b;
         Bierka* b2;
         for(int k = 0; k<16; k++)
@@ -441,7 +441,7 @@ int Rozgrywka::mat()
                         }
                         else if(bierka<0) //przeciwnik bijemy
                         {
-                            b2 = szachownica.figury.find(bierka)->second;
+                            b2 = szachownica.znajdz(bierka);
                             if(b->bij(&szachownica, pole, true)==0)
                             {
                                 szachownica.zbij(b2, true);

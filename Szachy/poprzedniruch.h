@@ -6,6 +6,7 @@
 
 class PoprzedniRuch // klasa przechowujaca informacje o otsrtniw wykonanym ruchu umozliwiajaca cofanie
 {
+private:
     Bierka* poprzednia;     //bierka ktora zostal wykonany poprzedni ruch
     int pozycja[2];         //pozycja bierki poprzedniej przed ruchem
     Bierka* bita;           //bierka kotra ewentualnie zostala zbita w poprzednim ruchu
@@ -20,7 +21,7 @@ class PoprzedniRuch // klasa przechowujaca informacje o otsrtniw wykonanym ruchu
 public:
     PoprzedniRuch();
 
-    int ZapiszPoprzedni(int l, char k, Bierka* b, int* p, Bierka* bb = NULL, int* pb = NULL); //zapisuje dane przed ruchem
+    int ZapiszPoprzedni(int l, char k, Bierka* b, int p[2], Bierka* bb = NULL, int* pb = NULL); //zapisuje dane przed ruchem
     Bierka* PodajPoprzednia();
     int* PodajPozycja();
     Bierka* PodajBita();
