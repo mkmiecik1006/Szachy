@@ -36,21 +36,21 @@ MainWindow::~MainWindow()
 void MainWindow::on_Nowa_clicked()
 {
     rozgrywka.nowa();
-    puste.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/puste.png"));
-    gb.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/gb.png"));
-    gw.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/gw.png"));
-    hw.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/hw.png"));
-    hb.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/hb.png"));
-    kb.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/kb.png"));
-    kw.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/kw.png"));
-    k2b.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/k2b.png"));
-    k2w.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/k2w.png"));
-    krb.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/krb.png"));
-    krw.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/krw.png"));
-    pb.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/pb.png"));
-    pw.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/pw.png"));
-    wb.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/wb.png"));
-    ww.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/ww.png"));
+    puste.addFile(QString::fromUtf8("Pliki/puste.png"));
+    gb.addFile(QString::fromUtf8("Pliki/gb.png"));
+    gw.addFile(QString::fromUtf8("Pliki/gw.png"));
+    hw.addFile(QString::fromUtf8("Pliki/hw.png"));
+    hb.addFile(QString::fromUtf8("Pliki/hb.png"));
+    kb.addFile(QString::fromUtf8("Pliki/kb.png"));
+    kw.addFile(QString::fromUtf8("Pliki/kw.png"));
+    k2b.addFile(QString::fromUtf8("Pliki/k2b.png"));
+    k2w.addFile(QString::fromUtf8("Pliki/k2w.png"));
+    krb.addFile(QString::fromUtf8("Pliki/krb.png"));
+    krw.addFile(QString::fromUtf8("Pliki/krw.png"));
+    pb.addFile(QString::fromUtf8("Pliki/pb.png"));
+    pw.addFile(QString::fromUtf8("Pliki/pw.png"));
+    wb.addFile(QString::fromUtf8("Pliki/wb.png"));
+    ww.addFile(QString::fromUtf8("Pliki/ww.png"));
     ui->A1->setIcon(ww);
     ui->B1->setIcon(kw);
     ui->C1->setIcon(gw);
@@ -131,7 +131,7 @@ void MainWindow::on_Nowa_clicked()
 void MainWindow::on_Wyczysc_clicked()
 {
     rozgrywka.szachownica.wyczysc();
-    puste.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/puste.png"));
+    puste.addFile(QString::fromUtf8("Pliki/puste.png"));
     ui->A1->setIcon(puste);
     ui->B1->setIcon(puste);
     ui->C1->setIcon(puste);
@@ -216,7 +216,7 @@ void MainWindow::on_Ruch_clicked()
     {
         int pozycja1[2];    //Pozycja bierki przed ruchem
         int pozycja2[2];    //Docelowa pozycja bierki
-        int b;
+        int b =0;
 
         tx1 = ui->lineEdit->text();
         tx2 = ui->lineEdit_2->text();
@@ -238,21 +238,20 @@ void MainWindow::on_Ruch_clicked()
                         if(m==0&&s==0)
                         {
                             rozgrywka.zmienkolej();
-                            koniec(rozgrywka.podajkolej());
                             QMessageBox::about(this,"Koniec gry!", "Szach mat");
+                            koniec(rozgrywka.podajkolej());
+
                         }
                         else if(m==0&&s!=0)
                         {
-                            koniec('r');
                             QMessageBox::about(this,"Koniec gry!", "Remis: PAT");
+                            koniec('r');
                         }
                         else if(s==0) QMessageBox::about(this, "Szach", "Król jest szachowany");
                         remis();
 
-
                     }
                 }
-
 
             }
             catch(std::runtime_error &e)
@@ -263,7 +262,7 @@ void MainWindow::on_Ruch_clicked()
             {
                 if(wyjatek=="roszada1")
                 {
-                    Bierka* bierka2;
+                    Bierka* bierka2 =  (Bierka*)malloc(sizeof(Bierka));
                     if(bierka->podajnumer()>0) bierka2 = rozgrywka.szachownica.znajdz(9);
                     else if(bierka->podajnumer()<0) bierka2 = rozgrywka.szachownica.znajdz(-9);
                     int b2 = bierka2->narysuj();
@@ -279,7 +278,7 @@ void MainWindow::on_Ruch_clicked()
                 }
                 else if(wyjatek=="roszada2")
                 {
-                    Bierka* bierka2;
+                    Bierka* bierka2 =  (Bierka*)malloc(sizeof(Bierka));
                     if(bierka->podajnumer()>0) bierka2 = rozgrywka.szachownica.znajdz(10);
                     else if(bierka->podajnumer()<0) bierka2 = rozgrywka.szachownica.znajdz(-10);
                     int b2 = bierka2->narysuj();
@@ -311,7 +310,6 @@ void MainWindow::on_Ruch_clicked()
                     if(r) //jeśli gracz zaproponował remis
                     remis();
 
-
                 }
             }
 
@@ -327,7 +325,7 @@ void MainWindow::on_Ruch_clicked()
     else QMessageBox::about(this, "Błąd", "Rozpocznij rozgrywkę!");
     ui->lineEdit->clear();
     ui->lineEdit_2->clear();
-    if(rozgrywka.poprzedni.PodajAktywny()) ui->btnCofnij->setEnabled(true);
+    if(rozgrywka.poprzedni.PodajAktywny()&&rozgrywka.czyaktywna()) ui->btnCofnij->setEnabled(true);
 
 }
 
@@ -359,24 +357,24 @@ int MainWindow::OdczytajPozycje(QString txt, int pozycja[2])
 
 }
 
-int MainWindow::ZmienIkone(int bierka, int* pozycja)
+int MainWindow::ZmienIkone(int bierka, int pozycja[2])
 {
     QIcon ikona;
-    if(bierka==0)    ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/puste.png"));
-    else if(bierka >= 1 && bierka <=8) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/pw.png"));
-    else if(bierka >= -8 && bierka <=-1) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/pb.png"));
-    else if(bierka == 9 || bierka == 10) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/ww.png"));
-    else if(bierka == -9 || bierka == -10) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/wb.png"));
-    else if(bierka == 11) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/kw.png"));
-    else if(bierka == 12) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/k2w.png"));
-    else if(bierka == -11) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/kb.png"));
-    else if(bierka == -12) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/k2b.png"));
-    else if(bierka == 13|| bierka == 14 ) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/gw.png"));
-    else if(bierka == -13|| bierka == -14 ) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/gb.png"));
-    else if(bierka == 15) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/hw.png"));
-    else if(bierka == -15) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/hb.png"));
-    else if(bierka == 16) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/krw.png"));
-    else if(bierka == -16) ikona.addFile(QString::fromUtf8("C:/Users/acer/Documents/SzachyGUI/krb.png"));
+    if(bierka==0)    ikona.addFile(QString::fromUtf8("Pliki/puste.png"));
+    else if(bierka >= 1 && bierka <=8) ikona.addFile(QString::fromUtf8("Pliki/pw.png"));
+    else if(bierka >= -8 && bierka <=-1) ikona.addFile(QString::fromUtf8("Pliki/pb.png"));
+    else if(bierka == 9 || bierka == 10) ikona.addFile(QString::fromUtf8("Pliki/ww.png"));
+    else if(bierka == -9 || bierka == -10) ikona.addFile(QString::fromUtf8("Pliki/wb.png"));
+    else if(bierka == 11) ikona.addFile(QString::fromUtf8("Pliki/kw.png"));
+    else if(bierka == 12) ikona.addFile(QString::fromUtf8("Pliki/k2w.png"));
+    else if(bierka == -11) ikona.addFile(QString::fromUtf8("Pliki/kb.png"));
+    else if(bierka == -12) ikona.addFile(QString::fromUtf8("Pliki/k2b.png"));
+    else if(bierka == 13|| bierka == 14 ) ikona.addFile(QString::fromUtf8("Pliki/gw.png"));
+    else if(bierka == -13|| bierka == -14 ) ikona.addFile(QString::fromUtf8("Pliki/gb.png"));
+    else if(bierka == 15) ikona.addFile(QString::fromUtf8("Pliki/hw.png"));
+    else if(bierka == -15) ikona.addFile(QString::fromUtf8("Pliki/hb.png"));
+    else if(bierka == 16) ikona.addFile(QString::fromUtf8("Pliki/krw.png"));
+    else if(bierka == -16) ikona.addFile(QString::fromUtf8("Pliki/krb.png"));
     else throw std::runtime_error("Błędny numer ikony bierki");
 
     if(pozycja[0]==0 && pozycja[1]==0) ui->A1->setIcon(ikona);

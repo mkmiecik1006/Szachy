@@ -7,6 +7,7 @@ Promocja::Promocja(Bierka* b, QWidget *parent) :
 {
     bierka = b;
     ui->setupUi(this);
+    setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
 }
 
 Promocja::~Promocja()

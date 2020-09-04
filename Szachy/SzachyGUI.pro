@@ -46,3 +46,4 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     figury.qrc
+

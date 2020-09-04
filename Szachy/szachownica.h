@@ -10,14 +10,14 @@ using namespace std;
 
 class Szachownica
 {
-private:    map <int, Bierka*> figury;  // kontener przechowujacy wskazniki do bierek na danej planszy
-
-public:
+    friend class Rozgrywka;
+protected:
+    map <int, Bierka*> figury;  // kontener przechowujacy wskazniki do bierek na danej planszy
 
     int     plansza[8][8]; //tablica 8x8 odwzorowujaca szachownice, przechowuje numery bierek
 
     int     tmp[8][8];      //tablica tymczaasowa wykorzystywana do sprawdzania poprawnosci ruchow
-
+public:
     Szachownica()
     {
         for(int i = 0; i<8;i++)
@@ -29,7 +29,6 @@ public:
             }
         }
     }
-
 
 
     ~Szachownica()
